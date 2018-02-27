@@ -1,9 +1,14 @@
+import './rxjs-operators';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { APP_BASE_HREF } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { AppMaterialModule } from 'app/app.material.module';
 
 import { AppComponent } from './app.component';
+
 
 @NgModule({
   declarations: [
@@ -11,10 +16,19 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
-    HttpModule
+    HttpClientModule,
+    AppMaterialModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_BASE_HREF,
+      useValue: '/'
+    },
+    GmapsService
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

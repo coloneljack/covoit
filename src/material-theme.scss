@@ -1,1 +1,53 @@
 /* Angular Material theme */
+@import 'fonts';
+@import 'variables';
+// @see https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+
+// Custom colour palettes
+// @note Used Material Color Tool
+// @link https://material.io/color/#!/?view.left=1&view.right=1&primary.color=485a79&primary.text.color=ffffff&secondary.color=007aff&secondary.text.color=ffffff
+// @note https://material.io/guidelines/style/color.html#color-color-system
+$covoit: (
+  50: $main-color-50,
+  100: $main-color-100,
+  200: $main-color-200,
+  300: $main-color-300,
+  500: $main-color-500,
+  700: $main-color-700,
+  900: $main-color-900,
+  contrast:
+  (
+    50: $main-color-700,
+    100: $main-color-700,
+    300: $main-color-50,
+    500: $main-color-50,
+    700: $main-color-50,
+    900: $main-color-50
+  )
+);
+$covoit-accent: (
+  300: $accent-color-300,
+  500: $accent-color-500,
+  700: $accent-color-700,
+  900: $accent-color-900,
+  contrast: (300: $main-color-50, 500: $main-color-50, 700: $main-color-50, 900: $main-color-50)
+);
+$covoit-warn: (
+  100: $warn-color-100,
+  500: $warn-color-500,
+  700: $warn-color-700,
+  contrast: (100: $main-color-500, 500: $main-color-500, 700: $main-color-500)
+);
+
+// Custom covoit font
+// @link https://material.io/guidelines/style/typography.html
+// @link https://github.com/angular/material2/blob/master/guides/typography.md
+$covoit-typography: mat-typography-config($font-family: 'LatoWeb', $input: mat-typography-level(16px, 1.125, 500));
+@include mat-core($covoit-typography);
+
+$covoit-app-primary: mat-palette($covoit, 500, 300, 700);
+$covoit-app-accent: mat-palette($covoit-accent, 500, 300, 700);
+$covoit-app-warn: mat-palette($covoit-warn);
+$covoit-app-theme: mat-light-theme($covoit-app-primary, $covoit-app-accent, $covoit-app-warn);
+@include angular-material-theme($covoit-app-theme);
