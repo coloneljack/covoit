@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { AppMaterialModule } from 'app/app.material.module';
 
 import { AppComponent } from './app.component';
+import { GmapsService } from 'app/shared/services/gmaps.service';
 
 
 @NgModule({

@@ -1,3 +1,22 @@
 <h1>
   {{title}}
 </h1>
+
+<div>
+  <form #searchAddressForm="ngForm" (ngSubmit)="search()" novalidate>
+    <div id="search">
+      <input id="address" type="text" name="address" [(ngModel)]="searchAddress" placeholder="Search an address...">
+      <button type="submit" mat-raised-button color="primary">Search !</button>
+    </div>
+
+    <div id="results">
+      <h3>Results</h3>
+      
+      <div *ngIf="locations.length > 0">
+        <span *ngFor="let location of locations">Lat : {{location.lat}}, Lng : {{location.lng}}</span>
+      </div>
+
+      <div *ngIf="locations.length === 0 && searchAddressForm.dirty">Aucun résultat</div>
+    </div>
+  </form>
+</div>
