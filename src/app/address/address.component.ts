@@ -14,6 +14,9 @@ export class AddressComponent implements OnInit {
   @Output()
   public addressSelected = new EventEmitter();
 
+  @Output()
+  public addressAdded = new EventEmitter();
+
   constructor() {
   }
 
@@ -22,6 +25,13 @@ export class AddressComponent implements OnInit {
 
   public select(): void {
     this.addressSelected.emit({
+      'lat': this.address.lat,
+      'lng': this.address.lng
+    });
+  }
+
+  public add(): void {
+    this.addressAdded.emit({
       'lat': this.address.lat,
       'lng': this.address.lng
     });

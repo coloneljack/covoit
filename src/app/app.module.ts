@@ -13,12 +13,15 @@ import { AgmCoreModule } from '@agm/core';
 import { environment } from '../environments/environment';
 import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
 import { AddressComponent } from './address/address.component';
+import { AppService } from './app.service';
+import { CoworkerCardComponent } from './shared/components/coworker-card/coworker-card.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddressComponent
+    AddressComponent,
+    CoworkerCardComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +39,8 @@ import { AddressComponent } from './address/address.component';
       provide: APP_BASE_HREF,
       useValue: '/'
     },
-    GmapsService
+    GmapsService,
+    AppService
   ],
   bootstrap: [AppComponent]
 })

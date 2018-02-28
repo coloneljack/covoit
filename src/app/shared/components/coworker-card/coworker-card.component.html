@@ -1,0 +1,29 @@
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar class="brand-logo"></div>
+    <mat-card-title>{{coworker.firstName}}&nbsp;{{coworker.lastName}}</mat-card-title>
+    <mat-card-subtitle>Ingénieur concepteur</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div>
+      <span>
+        <mat-icon>map</mat-icon>
+      </span>
+      <span>{{coworker.address.streetNumber}}&nbsp;{{coworker.address.streetName}}</span>
+      <span>{{coworker.address.zip}}</span>
+      <span>{{coworker.address.city}}</span>
+    </div>
+    <div>
+      <span>
+        <mat-icon>phone</mat-icon>
+      </span>
+      <span>{{coworker.tel}}</span>
+    </div>
+    <div>
+      <span>
+        <mat-icon>email</mat-icon>
+      </span>
+      <span><a [href]="'mailto:'+coworker.email">{{coworker.email}}</a></span>
+    </div>
+  </mat-card-content>
+</mat-card>

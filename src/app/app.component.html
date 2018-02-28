@@ -14,7 +14,7 @@
 
       <div *ngIf="locations.length > 0">
         <app-address *ngFor="let location of locations" [address]="location"
-                     (addressSelected)="centerMap($event)"></app-address>
+                     (addressSelected)="centerMap($event)" (addressAdded)="addMarker($event)"></app-address>
       </div>
 
       <div *ngIf="locations.length === 0 && searchAddressForm.submitted">Aucun résultat</div>
@@ -23,11 +23,20 @@
 </div>
 
 <div id="map">
-  <agm-map class="map" [latitude]="mapCenter.lat" [longitude]="mapCenter.lng">
-    <agm-marker [latitude]="workLocation.lat" [longitude]="workLocation.lng">
+  <agm-map class="map" [latitude]="mapCenter.lat" [longitude]="mapCenter.lng" [zoom]="11">
+    <agm-marker [latitude]="workLocation.lat" [longitude]="workLocation.lng"
+                [title]="'Agence de Nantes'" [label]="'O'">
       <agm-snazzy-info-window [maxWidth]="200" [closeWhenOthersOpen]="true">
         <ng-template>
           This is where we work !
+        </ng-template>
+      </agm-snazzy-info-window>
+    </agm-marker>
+    <agm-marker *ngFor="let coworker of coworkers"
+                [latitude]="coworker.address.lat" [longitude]="coworker.address.lng">
+      <agm-snazzy-info-window [maxWidth]="600" [closeWhenOthersOpen]="true">
+        <ng-template>
+          <app-coworker-card [coworker]="coworker"></app-coworker-card>
         </ng-template>
       </agm-snazzy-info-window>
     </agm-marker>

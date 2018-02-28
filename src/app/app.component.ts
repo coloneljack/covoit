@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GmapsService } from 'app/shared/services/gmaps.service';
 import { MatSnackBar } from '@angular/material';
+import { AppService } from './app.service';
+import { Coworker } from './shared/entities/coworker';
 import { Address } from './shared/entities/address';
 
 @Component({
@@ -8,7 +10,7 @@ import { Address } from './shared/entities/address';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   public title = 'Google Maps test';
   public locations: Array<Address> = [];
   public searchAddress = '';
@@ -16,13 +18,17 @@ export class AppComponent {
     lat: 47.2753091,
     lng: -1.51228
   };
-
   public mapCenter: Address = {
     lat: this.workLocation.lat,
     lng: this.workLocation.lng
   };
+  public coworkers: Array<Coworker> = [];
 
-  constructor(private gMapsService: GmapsService, private snackBar: MatSnackBar) {
+  constructor(private gMapsService: GmapsService, private appService: AppService, private snackBar: MatSnackBar) {
+  }
+
+  ngOnInit(): void {
+    this.appService.getAllCoworkers().subscribe((coworkers: Array<Coworker>) => this.coworkers = coworkers);
   }
 
   search(): void {
@@ -32,7 +38,16 @@ export class AppComponent {
     );
   }
 
-  centerMap(center: any) {
+  centerMap(center: any): void {
     this.mapCenter = center;
   }
+
+  addMarker(address: Address): void {
+    this.coworkers.push({
+      firstName: '',
+      lastName: '',
+      address
+    });
+  }
+
 }
