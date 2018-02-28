@@ -5,22 +5,31 @@ import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AppMaterialModule } from 'app/app.material.module';
 
 import { AppComponent } from './app.component';
-import { GmapsService } from 'app/shared/services/gmaps.service';
+import { AppMaterialModule } from './app.material.module';
+import { GmapsService } from './shared/services/gmaps.service';
+import { AgmCoreModule } from '@agm/core';
+import { environment } from '../environments/environment';
+import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
+import { AddressComponent } from './address/address.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AddressComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    AppMaterialModule
+    AppMaterialModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.GOOGLE_MAPS_API_KEY
+    }),
+    AgmSnazzyInfoWindowModule
   ],
   providers: [
     {

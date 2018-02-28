@@ -11,12 +11,25 @@
 
     <div id="results">
       <h3>Results</h3>
-      
+
       <div *ngIf="locations.length > 0">
-        <span *ngFor="let location of locations">Lat : {{location.lat}}, Lng : {{location.lng}}</span>
+        <app-address *ngFor="let location of locations" [address]="location"
+                     (addressSelected)="centerMap($event)"></app-address>
       </div>
 
-      <div *ngIf="locations.length === 0 && searchAddressForm.dirty">Aucun résultat</div>
+      <div *ngIf="locations.length === 0 && searchAddressForm.submitted">Aucun résultat</div>
     </div>
   </form>
+</div>
+
+<div id="map">
+  <agm-map class="map" [latitude]="mapCenter.lat" [longitude]="mapCenter.lng">
+    <agm-marker [latitude]="workLocation.lat" [longitude]="workLocation.lng">
+      <agm-snazzy-info-window [maxWidth]="200" [closeWhenOthersOpen]="true">
+        <ng-template>
+          This is where we work !
+        </ng-template>
+      </agm-snazzy-info-window>
+    </agm-marker>
+  </agm-map>
 </div>

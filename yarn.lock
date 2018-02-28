@@ -2,6 +2,14 @@
 # yarn lockfile v1
 
 
+"@agm/core@^1.0.0-beta.2":
+  version "1.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@agm/core/-/core-1.0.0-beta.2.tgz#da15c0a5e86fe9e1178f14c36a3e0ffc14f9ad77"
+
+"@agm/snazzy-info-window@^1.0.0-beta.2":
+  version "1.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@agm/snazzy-info-window/-/snazzy-info-window-1.0.0-beta.2.tgz#c30c9afa00a3427a99dd1ea521596e635691fff5"
+
 "@angular-devkit/build-optimizer@0.3.1":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@angular-devkit/build-optimizer/-/build-optimizer-0.3.1.tgz#6a26a46c58858c7b67833c6d8a81198fa17d23e7"
@@ -5119,6 +5127,10 @@ snapdragon@^0.8.1:
     source-map "^0.5.6"
     source-map-resolve "^0.5.0"
     use "^2.0.0"
+
+snazzy-info-window@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/snazzy-info-window/-/snazzy-info-window-1.1.1.tgz#3b4da4f41c3aa6aa4ad878ecb97c3c2eb5c89b2f"
 
 sntp@1.x.x:
   version "1.0.9"

@@ -19,7 +19,9 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.scss", "material-theme.scss"
+        "styles.scss",
+        "material-theme.scss",
+        "../node_modules/snazzy-info-window/dist/snazzy-info-window.css"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",

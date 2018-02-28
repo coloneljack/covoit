@@ -1,0 +1,21 @@
+mat-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 5px;
+
+  /deep/ span {
+    flex: 1;
+  }
+
+  /deep/ .item-card-icon {
+    display: flex;
+    align-items: center;
+  }
+
+  .card-item-action {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
