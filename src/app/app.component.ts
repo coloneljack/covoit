@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
     );
   }
 
-  centerMap(center: any): void {
+  centerMap(center: Address): void {
     this.mapCenter = center;
   }
 

@@ -47,4 +47,19 @@ export class GmapsService {
     });
   }
 
+  public getRoute(origin: Address, destination: Address, waypoints?: Array<Address>): void {
+    this.googleMapsClient.directions({
+      origin,
+      destination,
+      mode: 'driving',
+      units: 'metric'
+    }, (err, response) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(response);
+      }
+    });
+  }
+
 }
