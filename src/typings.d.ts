@@ -1,7 +1,6 @@
 /* SystemJS module definition */
-declare var module: {
-  id: string;
-};
+declare var module: NodeModule;
 
-/* Google Maps module */
-declare module '@google/maps';
+interface NodeModule {
+  id: string;
+}
