@@ -24,16 +24,10 @@ export class AddressComponent implements OnInit {
   }
 
   public select(): void {
-    this.addressSelected.emit({
-      'lat': this.address.lat,
-      'lng': this.address.lng
-    });
+    this.addressSelected.emit(this.address);
   }
 
   public add(): void {
-    this.addressAdded.emit({
-      'lat': this.address.lat,
-      'lng': this.address.lng
-    });
+    this.addressAdded.emit(this.address);
   }
 }

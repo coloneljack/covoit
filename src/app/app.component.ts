@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { GmapsService } from 'app/shared/services/gmaps.service';
 import { MatSnackBar } from '@angular/material';
+import { GmapsService } from 'app/shared/services/gmaps.service';
 import { AppService } from './app.service';
-import { Coworker } from './shared/entities/coworker';
 import { Address } from './shared/entities/address';
+import { Coworker } from './shared/entities/coworker';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +23,8 @@ export class AppComponent implements OnInit {
     lng: this.workLocation.lng
   };
   public coworkers: Array<Coworker> = [];
+  public otherAddresses: Array<Address> = [];
+  public route: any = {};
 
   constructor(private gMapsService: GmapsService, private appService: AppService, private snackBar: MatSnackBar) {
   }
@@ -43,11 +45,10 @@ export class AppComponent implements OnInit {
   }
 
   addMarker(address: Address): void {
-    this.coworkers.push({
-      firstName: '',
-      lastName: '',
-      address
-    });
+    this.otherAddresses.push(address);
   }
 
+  findRoute(address: Address): void {
+    this.gMapsService.getRoute(address, this.workLocation).subscribe(result => this.route = result);
+  }
 }

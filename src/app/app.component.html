@@ -32,13 +32,20 @@
         </ng-template>
       </agm-snazzy-info-window>
     </agm-marker>
+
     <agm-marker *ngFor="let coworker of coworkers"
-                [latitude]="coworker.address.lat" [longitude]="coworker.address.lng">
+                [latitude]="coworker.address.lat" [longitude]="coworker.address.lng"
+                (markerClick)="findRoute(coworker.address)">
       <agm-snazzy-info-window [maxWidth]="600" [closeWhenOthersOpen]="true">
         <ng-template>
           <app-coworker-card [coworker]="coworker"></app-coworker-card>
         </ng-template>
       </agm-snazzy-info-window>
+    </agm-marker>
+
+    <agm-marker *ngFor="let address of otherAddresses"
+                [latitude]="address.lat" [longitude]="address.lng"
+                (markerClick)="findRoute(address)">
     </agm-marker>
   </agm-map>
 </div>
