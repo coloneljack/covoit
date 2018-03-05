@@ -59,6 +59,9 @@
     },
     "service": {
       "spec": false
+    },
+    "directive": {
+      "spec": false
     }
   }
 }

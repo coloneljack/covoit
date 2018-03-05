@@ -1,13 +1,20 @@
+import { GoogleMapsAPIWrapper } from '@agm/core';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
 import { Address } from '../entities/address';
 
+declare const google: any;
+
 @Injectable()
 export class GmapsService {
 
-  constructor(private http: HttpClient) {}
+  private directionsService: any;
+
+  constructor(private http: HttpClient, private gMapsApi: GoogleMapsAPIWrapper) {
+    this.gMapsApi.getNativeMap().then(() => this.directionsService = new google.maps.DirectionsService);
+  }
 
   public getPotentialLocations(address: string): Observable<Array<Address>> {
     return this.http.get<any>(`${environment.GOOGLE_MAPS_API_ROOT}/geocode/json`, {
@@ -35,21 +42,4 @@ export class GmapsService {
       });
     });
   }
-
-  // TODO fix CORS problem !!!
-  public getRoute(origin: Address, destination: Address, waypoints?: Array<Address>): Observable<any> {
-    return this.http.get<any>(`${environment.GOOGLE_MAPS_API_ROOT}/directions/json`, {
-      params: {
-        key: environment.GOOGLE_MAPS_API_KEY,
-        origin: `${origin.lat},${origin.lng}`,
-        destination: `${destination.lat},${destination.lng}`,
-        travelMode: 'DRIVING',
-        unitSystem: 'METRIC'
-      },
-      observe: 'response'
-    }).do(result => {
-      console.log(result);
-    });
-  }
-
 }

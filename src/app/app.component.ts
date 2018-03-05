@@ -22,9 +22,10 @@ export class AppComponent implements OnInit {
     lat: this.workLocation.lat,
     lng: this.workLocation.lng
   };
+  public routeDestination: Address = this.workLocation;
+  public routeOrigin: Address;
   public coworkers: Array<Coworker> = [];
   public otherAddresses: Array<Address> = [];
-  public route: any = {};
 
   constructor(private gMapsService: GmapsService, private appService: AppService, private snackBar: MatSnackBar) {
   }
@@ -48,7 +49,7 @@ export class AppComponent implements OnInit {
     this.otherAddresses.push(address);
   }
 
-  findRoute(address: Address): void {
-    this.gMapsService.getRoute(address, this.workLocation).subscribe(result => this.route = result);
+  displayRouteFrom(address: Address): void {
+    this.routeOrigin = address;
   }
 }

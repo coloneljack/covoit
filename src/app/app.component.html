@@ -24,6 +24,8 @@
 
 <div id="map">
   <agm-map class="map" [latitude]="mapCenter.lat" [longitude]="mapCenter.lng" [zoom]="11">
+    <app-route [from]="routeOrigin" [to]="routeDestination"></app-route>
+
     <agm-marker [latitude]="workLocation.lat" [longitude]="workLocation.lng"
                 [title]="'Agence de Nantes'" [label]="'O'">
       <agm-snazzy-info-window [maxWidth]="200" [closeWhenOthersOpen]="true">
@@ -35,7 +37,7 @@
 
     <agm-marker *ngFor="let coworker of coworkers"
                 [latitude]="coworker.address.lat" [longitude]="coworker.address.lng"
-                (markerClick)="findRoute(coworker.address)">
+                (markerClick)="displayRouteFrom(coworker.address)">
       <agm-snazzy-info-window [maxWidth]="600" [closeWhenOthersOpen]="true">
         <ng-template>
           <app-coworker-card [coworker]="coworker"></app-coworker-card>
@@ -45,7 +47,7 @@
 
     <agm-marker *ngFor="let address of otherAddresses"
                 [latitude]="address.lat" [longitude]="address.lng"
-                (markerClick)="findRoute(address)">
+                (markerClick)="displayRouteFrom(address)">
     </agm-marker>
   </agm-map>
 </div>

@@ -1,27 +1,29 @@
-import './rxjs-operators';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
+import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
 import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { environment } from '../environments/environment';
+import { AddressComponent } from './address/address.component';
 
 import { AppComponent } from './app.component';
 import { AppMaterialModule } from './app.material.module';
-import { GmapsService } from './shared/services/gmaps.service';
-import { AgmCoreModule } from '@agm/core';
-import { environment } from '../environments/environment';
-import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
-import { AddressComponent } from './address/address.component';
 import { AppService } from './app.service';
+import './rxjs-operators';
 import { CoworkerCardComponent } from './shared/components/coworker-card/coworker-card.component';
+import { GmapsService } from './shared/services/gmaps.service';
+import { RouteDirective } from './shared/directives/directions.directive';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     AddressComponent,
-    CoworkerCardComponent
+    CoworkerCardComponent,
+    RouteDirective
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,8 @@ import { CoworkerCardComponent } from './shared/components/coworker-card/coworke
       useValue: '/'
     },
     GmapsService,
-    AppService
+    AppService,
+    GoogleMapsAPIWrapper
   ],
   bootstrap: [AppComponent]
 })
