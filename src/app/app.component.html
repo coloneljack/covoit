@@ -23,8 +23,8 @@
 </div>
 
 <div id="map">
-  <agm-map class="map" [latitude]="mapCenter.lat" [longitude]="mapCenter.lng" [zoom]="11">
-    <app-route [from]="routeOrigin" [to]="routeDestination"></app-route>
+  <agm-map class="map" [latitude]="mapCenter.lat" [longitude]="mapCenter.lng" [zoom]="12">
+    <app-route [from]="routeOrigin" [to]="routeDestination" [keepMapZoomOnDisplay]="true"></app-route>
 
     <agm-marker [latitude]="workLocation.lat" [longitude]="workLocation.lng"
                 [title]="'Agence de Nantes'" [label]="'O'">

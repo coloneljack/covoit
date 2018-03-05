@@ -14,8 +14,8 @@ import { AppMaterialModule } from './app.material.module';
 import { AppService } from './app.service';
 import './rxjs-operators';
 import { CoworkerCardComponent } from './shared/components/coworker-card/coworker-card.component';
+import { RouteDirective } from './shared/directives/route.directive';
 import { GmapsService } from './shared/services/gmaps.service';
-import { RouteDirective } from './shared/directives/directions.directive';
 
 
 @NgModule({
