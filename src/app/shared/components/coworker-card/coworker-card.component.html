@@ -4,6 +4,7 @@
     <mat-card-title>{{coworker.firstName}}&nbsp;{{coworker.lastName}}</mat-card-title>
     <mat-card-subtitle>Ingénieur concepteur</mat-card-subtitle>
   </mat-card-header>
+
   <mat-card-content>
     <div>
       <div>
@@ -29,18 +30,33 @@
       </div>
     </div>
   </mat-card-content>
+
   <mat-card-actions>
     <button type="button" *ngIf="canSetAsOrigin" mat-button title="Set as origin"
             (click)="setOrigin()">
       <i class="far fa-flag fa-lg"></i>
     </button>
+    <button type="button" *ngIf="canUnsetAsOrigin" mat-button title="Unset origin"
+            (click)="unsetOrigin()">
+      <i class="far fa-flag fa-lg crossed"></i>
+    </button>
+
     <button type="button" *ngIf="canSetAsDestination" mat-button title="Set as destination"
             (click)="setDestination()">
       <i class="fas fa-flag-checkered fa-lg"></i>
     </button>
+    <button type="button" *ngIf="canUnsetAsDestination" mat-button title="Unset destination"
+            (click)="unsetDestination()">
+      <i class="fas fa-flag-checkered fa-lg crossed"></i>
+    </button>
+
     <button type="button" *ngIf="canAddAsWaypoint" mat-button title="Add as waypoint"
             (click)="addAsWaypoint()">
       <i class="fas fa-map-marker fa-lg"></i>
+    </button>
+    <button type="button" *ngIf="canRemoveAsWaypoint" mat-button title="Remove waypoint"
+            (click)="removeAsWaypoint()">
+      <i class="fas fa-map-marker fa-lg crossed"></i>
     </button>
   </mat-card-actions>
 </mat-card>

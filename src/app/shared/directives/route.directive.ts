@@ -27,7 +27,6 @@ export class RouteDirective implements OnInit, OnChanges, DoCheck {
       this.directionsService = new google.maps.DirectionsService();
 
       this.directionsDisplay = new google.maps.DirectionsRenderer();
-      this.directionsDisplay.setMap(map);
 
       if (this.keepMapZoomOnDisplay) {
         this.directionsDisplay.setOptions({preserveViewport: true});
@@ -48,7 +47,7 @@ export class RouteDirective implements OnInit, OnChanges, DoCheck {
 
   private displayRoute(): void {
     if (this.from && this.to) {
-      this.gmapsApi.getNativeMap().then(() => {
+      this.gmapsApi.getNativeMap().then(map => {
         this.directionsService.route({
           origin: {
             lat: this.from.lat,
@@ -71,12 +70,16 @@ export class RouteDirective implements OnInit, OnChanges, DoCheck {
           unitSystem: google.maps.UnitSystem.METRIC
         }, (response, status) => {
           if (status === 'OK') {
+            this.directionsDisplay.setMap(map);
             this.directionsDisplay.setDirections(response);
           } else {
             console.log('Directions request failed due to ' + status);
           }
         });
       });
+    } else if (this.directionsDisplay) {
+      // Remove direction if origin or destination is missing
+      this.directionsDisplay.setMap(null);
     }
   }
 }

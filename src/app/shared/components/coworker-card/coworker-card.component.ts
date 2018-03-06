@@ -15,10 +15,19 @@ export class CoworkerCardComponent implements OnInit {
   public canSetAsOrigin = true;
 
   @Input()
+  public canUnsetAsOrigin = false;
+
+  @Input()
   public canSetAsDestination = true;
 
   @Input()
+  public canUnsetAsDestination = false;
+
+  @Input()
   public canAddAsWaypoint = true;
+
+  @Input()
+  public canRemoveAsWaypoint = false;
 
   @Output()
   public setAsOrigin = new EventEmitter();
@@ -28,6 +37,15 @@ export class CoworkerCardComponent implements OnInit {
 
   @Output()
   public addedAsWaypoint = new EventEmitter();
+
+  @Output()
+  public unsetAsOrigin = new EventEmitter();
+
+  @Output()
+  public unsetAsDestination = new EventEmitter();
+
+  @Output()
+  public removedAsWaypoint = new EventEmitter();
 
   constructor() {
   }
@@ -45,6 +63,18 @@ export class CoworkerCardComponent implements OnInit {
 
   public addAsWaypoint(): void {
     this.addedAsWaypoint.emit(this.coworker.address);
+  }
+
+  public unsetOrigin(): void {
+    this.unsetAsOrigin.emit(this.coworker.address);
+  }
+
+  public unsetDestination(): void {
+    this.unsetAsDestination.emit(this.coworker.address);
+  }
+
+  public removeAsWaypoint(): void {
+    this.removedAsWaypoint.emit(this.coworker.address);
   }
 
 }

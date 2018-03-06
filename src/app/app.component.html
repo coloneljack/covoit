@@ -52,10 +52,16 @@
                        [canSetAsOrigin]="!alreadyOrigin(coworker.address) && !alreadyDestination(coworker.address)"
                        [canSetAsDestination]="!alreadyDestination(coworker.address)"
                        [canAddAsWaypoint]="!alreadyWaypoint(coworker.address) && !alreadyOrigin(coworker.address)
-                                              && !alreadyDestination(coworker.address)"
+                              && !alreadyDestination(coworker.address)"
+                       [canUnsetAsOrigin]="alreadyOrigin(coworker.address)"
+                       [canUnsetAsDestination]="alreadyDestination(coworker.address)"
+                       [canRemoveAsWaypoint]="alreadyWaypoint(coworker.address)"
                        (setAsOrigin)="displayRouteFrom($event)"
                        (setAsDestination)="displayRouteTo($event)"
-                       (addedAsWaypoint)="addWaypoint($event)">
+                       (addedAsWaypoint)="addWaypoint($event)"
+                       (unsetAsOrigin)="resetOrigin()"
+                       (unsetAsDestination)="resetDestination()"
+                       (removedAsWaypoint)="removeWaypoint($event)">
     </app-coworker-card>
   </div>
 

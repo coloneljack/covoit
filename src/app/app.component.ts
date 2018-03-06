@@ -64,6 +64,21 @@ export class AppComponent implements OnInit {
     this.waypoints.push(address);
   }
 
+  resetOrigin(): void {
+    this.routeOrigin = null;
+  }
+
+  resetDestination(): void {
+    this.routeDestination = null;
+  }
+
+  removeWaypoint(address: Address) {
+    const idx = this.waypoints.indexOf(address);
+    if (idx !== -1) {
+      this.waypoints.splice(idx, 1);
+    }
+  }
+
   alreadyOrigin(address: Address): boolean {
     return this.routeOrigin === address;
   }
@@ -76,10 +91,4 @@ export class AppComponent implements OnInit {
     return this.waypoints.indexOf(address) !== -1;
   }
 
-  removeWaypoint(address: Address) {
-    const idx = this.waypoints.indexOf(address);
-    if (idx !== -1) {
-      this.waypoints.splice(idx, 1);
-    }
-  }
 }
