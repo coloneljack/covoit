@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Coworker } from '../../entities/coworker';
 
 @Component({
@@ -11,10 +11,40 @@ export class CoworkerCardComponent implements OnInit {
   @Input()
   public coworker: Coworker;
 
+  @Input()
+  public canSetAsOrigin = true;
+
+  @Input()
+  public canSetAsDestination = true;
+
+  @Input()
+  public canAddAsWaypoint = true;
+
+  @Output()
+  public setAsOrigin = new EventEmitter();
+
+  @Output()
+  public setAsDestination = new EventEmitter();
+
+  @Output()
+  public addedAsWaypoint = new EventEmitter();
+
   constructor() {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
+  }
+
+  public setOrigin(): void {
+    this.setAsOrigin.emit(this.coworker.address);
+  }
+
+  public setDestination(): void {
+    this.setAsDestination.emit(this.coworker.address);
+  }
+
+  public addAsWaypoint(): void {
+    this.addedAsWaypoint.emit(this.coworker.address);
   }
 
 }

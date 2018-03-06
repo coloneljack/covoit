@@ -24,25 +24,17 @@
 
 <div id="map">
   <agm-map class="map" [latitude]="mapCenter.lat" [longitude]="mapCenter.lng" [zoom]="12">
-    <app-route [from]="routeOrigin" [to]="routeDestination" [keepMapZoomOnDisplay]="true"></app-route>
+    <app-route [from]="routeOrigin" [to]="routeDestination" [waypoints]="waypoints" [keepMapZoomOnDisplay]="true">
+    </app-route>
 
     <agm-marker [latitude]="workLocation.lat" [longitude]="workLocation.lng"
                 [title]="'Agence de Nantes'" [label]="'O'">
-      <agm-snazzy-info-window [maxWidth]="200" [closeWhenOthersOpen]="true">
-        <ng-template>
-          This is where we work !
-        </ng-template>
-      </agm-snazzy-info-window>
+      <agm-info-window>OAB Nantes</agm-info-window>
     </agm-marker>
 
     <agm-marker *ngFor="let coworker of coworkers"
-                [latitude]="coworker.address.lat" [longitude]="coworker.address.lng"
-                (markerClick)="displayRouteFrom(coworker.address)">
-      <agm-snazzy-info-window [maxWidth]="600" [closeWhenOthersOpen]="true">
-        <ng-template>
-          <app-coworker-card [coworker]="coworker"></app-coworker-card>
-        </ng-template>
-      </agm-snazzy-info-window>
+                [latitude]="coworker.address.lat" [longitude]="coworker.address.lng">
+      <agm-info-window>{{coworker.name}}</agm-info-window>
     </agm-marker>
 
     <agm-marker *ngFor="let address of otherAddresses"
@@ -50,4 +42,21 @@
                 (markerClick)="displayRouteFrom(address)">
     </agm-marker>
   </agm-map>
+</div>
+
+
+<div class="coworkers">
+  <h3>Coworker list</h3>
+  <div>
+    <app-coworker-card *ngFor="let coworker of coworkers" [coworker]="coworker"
+                       [canSetAsOrigin]="!alreadyOrigin(coworker.address) && !alreadyDestination(coworker.address)"
+                       [canSetAsDestination]="!alreadyDestination(coworker.address)"
+                       [canAddAsWaypoint]="!alreadyWaypoint(coworker.address) && !alreadyOrigin(coworker.address)
+                                              && !alreadyDestination(coworker.address)"
+                       (setAsOrigin)="displayRouteFrom($event)"
+                       (setAsDestination)="displayRouteTo($event)"
+                       (addedAsWaypoint)="addWaypoint($event)">
+    </app-coworker-card>
+  </div>
+
 </div>

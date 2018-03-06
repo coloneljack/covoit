@@ -23,7 +23,21 @@
       <span>
         <mat-icon>email</mat-icon>
       </span>
-      <span><a [href]="'mailto:'+coworker.email">{{coworker.email}}</a></span>
+      <span><a [href]="'mailto:' + coworker.email">{{coworker.email}}</a></span>
     </div>
   </mat-card-content>
+  <mat-card-actions>
+    <button type="button" *ngIf="canSetAsOrigin" mat-button color="primary" title="Set as origin"
+            (click)="setOrigin()">
+      <mat-icon>skip_previous</mat-icon>
+    </button>
+    <button type="button" *ngIf="canSetAsDestination" mat-button color="primary" title="Set as destination"
+            (click)="setDestination()">
+      <mat-icon>skip_next</mat-icon>
+    </button>
+    <button type="button" *ngIf="canAddAsWaypoint" mat-button color="primary" title="Add as waypoint"
+            (click)="addAsWaypoint()">
+      <mat-icon>add_location</mat-icon>
+    </button>
+  </mat-card-actions>
 </mat-card>

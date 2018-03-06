@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
   public routeOrigin: Address;
   public coworkers: Array<Coworker> = [];
   public otherAddresses: Array<Address> = [];
+  public waypoints: Array<Address> = [];
 
   constructor(private gMapsService: GmapsService, private appService: AppService, private snackBar: MatSnackBar) {
   }
@@ -51,5 +52,34 @@ export class AppComponent implements OnInit {
 
   displayRouteFrom(address: Address): void {
     this.routeOrigin = address;
+    this.removeWaypoint(address);
+  }
+
+  displayRouteTo(address: Address): void {
+    this.routeDestination = address;
+    this.removeWaypoint(address);
+  }
+
+  addWaypoint(address: Address): void {
+    this.waypoints.push(address);
+  }
+
+  alreadyOrigin(address: Address): boolean {
+    return this.routeOrigin === address;
+  }
+
+  alreadyDestination(address: Address): boolean {
+    return this.routeDestination === address;
+  }
+
+  alreadyWaypoint(address: Address): boolean {
+    return this.waypoints.indexOf(address) !== -1;
+  }
+
+  removeWaypoint(address: Address) {
+    const idx = this.waypoints.indexOf(address);
+    if (idx !== -1) {
+      this.waypoints.splice(idx, 1);
+    }
   }
 }
