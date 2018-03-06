@@ -1,5 +1,35 @@
 mat-card {
-  max-width: 400px;
+  width: 300px;
+
+  mat-card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    & > div {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+
+      & > div:first-child {
+        padding: 0 10px;
+      }
+
+      & > div:last-child {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+    }
+  }
+
+  mat-card-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
 }
 
 .brand-logo {

@@ -6,38 +6,41 @@
   </mat-card-header>
   <mat-card-content>
     <div>
-      <span>
+      <div>
         <mat-icon>map</mat-icon>
-      </span>
-      <span>{{coworker.address.streetNumber}}&nbsp;{{coworker.address.streetName}}</span>
-      <span>{{coworker.address.zip}}</span>
-      <span>{{coworker.address.city}}</span>
+      </div>
+      <div>
+        <span>{{coworker.address.streetNumber}}&nbsp;{{coworker.address.streetName}},&nbsp;</span>
+        <span>{{coworker.address.zip}}&nbsp;{{coworker.address.city}}</span>
+      </div>
     </div>
     <div>
-      <span>
+      <div>
         <mat-icon>phone</mat-icon>
-      </span>
-      <span>{{coworker.tel}}</span>
+      </div>
+      <div>{{coworker.tel}}</div>
     </div>
     <div>
-      <span>
+      <div>
         <mat-icon>email</mat-icon>
-      </span>
-      <span><a [href]="'mailto:' + coworker.email">{{coworker.email}}</a></span>
+      </div>
+      <div>
+        <a [href]="'mailto:' + coworker.email">{{coworker.email}}</a>
+      </div>
     </div>
   </mat-card-content>
   <mat-card-actions>
-    <button type="button" *ngIf="canSetAsOrigin" mat-button color="primary" title="Set as origin"
+    <button type="button" *ngIf="canSetAsOrigin" mat-button title="Set as origin"
             (click)="setOrigin()">
-      <mat-icon>skip_previous</mat-icon>
+      <i class="far fa-flag fa-lg"></i>
     </button>
-    <button type="button" *ngIf="canSetAsDestination" mat-button color="primary" title="Set as destination"
+    <button type="button" *ngIf="canSetAsDestination" mat-button title="Set as destination"
             (click)="setDestination()">
-      <mat-icon>skip_next</mat-icon>
+      <i class="fas fa-flag-checkered fa-lg"></i>
     </button>
-    <button type="button" *ngIf="canAddAsWaypoint" mat-button color="primary" title="Add as waypoint"
+    <button type="button" *ngIf="canAddAsWaypoint" mat-button title="Add as waypoint"
             (click)="addAsWaypoint()">
-      <mat-icon>add_location</mat-icon>
+      <i class="fas fa-map-marker fa-lg"></i>
     </button>
   </mat-card-actions>
 </mat-card>
