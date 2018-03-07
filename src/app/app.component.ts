@@ -11,10 +11,9 @@ import { Coworker } from './shared/entities/coworker';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  public title = 'Google Maps test';
+  public title = 'Covoit\' OAB';
   public locations: Array<Address> = [];
   public searchAddress = '';
-  public workLocation: Address;
   public routeDestination: Address;
   public mapCenter: Address;
   public routeOrigin: Address;
@@ -31,9 +30,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.appService.getWorkLocation().subscribe((wl: Address) => {
-      this.workLocation = wl;
       this.mapCenter = wl;
       this.routeDestination = wl;
+      this.otherAddresses.push(wl);
     });
     this.appService.getAllCoworkers().subscribe((coworkers: Array<Coworker>) => this.coworkers = coworkers);
   }

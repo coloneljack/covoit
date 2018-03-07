@@ -66,6 +66,7 @@ export class CoworkerAddressCardComponent implements OnChanges {
     } else {
       this.address = this.detail;
       this.title = this.address.title;
+      this.subtitle = null;
     }
   }
 

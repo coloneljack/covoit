@@ -32,19 +32,14 @@
       <app-route [from]="routeOrigin" [to]="routeDestination" [waypoints]="waypoints" [keepMapZoomOnDisplay]="true">
       </app-route>
 
-      <agm-marker [latitude]="workLocation.lat" [longitude]="workLocation.lng"
-                  [title]="'Agence de Nantes'" [label]="'O'"
-                  (markerClick)="select(workLocation)">
-        <agm-info-window>OAB Nantes</agm-info-window>
-      </agm-marker>
-
       <agm-marker *ngFor="let coworker of coworkers" [latitude]="coworker.address.lat"
                   [longitude]="coworker.address.lng"
                   (markerClick)="select(coworker)">
-        <agm-info-window>{{coworker.name}}</agm-info-window>
       </agm-marker>
 
-      <agm-marker *ngFor="let address of otherAddresses" [latitude]="address.lat" [longitude]="address.lng"
+      <agm-marker *ngFor="let address of otherAddresses; let i = index"
+                  [latitude]="address.lat" [longitude]="address.lng"
+                  [title]="address.title" [label]="'P'+(i+1)"
                   (markerClick)="select(address)">
       </agm-marker>
     </agm-map>

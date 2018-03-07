@@ -28,9 +28,11 @@ export class RouteDirective implements OnInit, OnChanges, DoCheck {
 
       this.directionsDisplay = new google.maps.DirectionsRenderer();
 
-      if (this.keepMapZoomOnDisplay) {
-        this.directionsDisplay.setOptions({preserveViewport: true});
-      }
+      this.directionsDisplay.setOptions({
+        draggable: true,
+        suppressMarkers: true,
+        preserveViewport: this.keepMapZoomOnDisplay
+      });
     });
   }
 

@@ -30,14 +30,15 @@ export class GmapsService {
         const zip = r.address_components.find(c => c.types.indexOf('postal_code') !== -1);
         const city = r.address_components.find(c => c.types.indexOf('locality') !== -1);
         const country = r.address_components.find(c => c.types.indexOf('country') !== -1);
-        return {
-          'lat': r.geometry.location.lat,
-          'lng': r.geometry.location.lng,
-          'streetNumber': streetNumber ? streetNumber.long_name : undefined,
-          'streetName': streetName ? streetName.long_name : undefined,
-          'zip': zip ? zip.long_name : undefined,
-          'city': city ? city.long_name : undefined,
-          'country': country ? country.long_name : undefined
+        return <Address> {
+          lat: r.geometry.location.lat,
+          lng: r.geometry.location.lng,
+          title: r.formatted_address,
+          streetNumber: streetNumber ? streetNumber.long_name : undefined,
+          streetName: streetName ? streetName.long_name : undefined,
+          zip: zip ? zip.long_name : undefined,
+          city: city ? city.long_name : undefined,
+          country: country ? country.long_name : undefined
         };
       });
     });

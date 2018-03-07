@@ -32,7 +32,8 @@ import { GmapsService } from './shared/services/gmaps.service';
     HttpClientModule,
     AppMaterialModule,
     AgmCoreModule.forRoot({
-      apiKey: environment.GOOGLE_MAPS_API_KEY
+      apiKey: environment.GOOGLE_MAPS_API_KEY,
+      libraries: ['places']
     }),
     AgmSnazzyInfoWindowModule
   ],
