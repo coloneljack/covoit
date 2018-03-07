@@ -5,7 +5,11 @@
 <div>
   <form #searchAddressForm="ngForm" (ngSubmit)="search()" novalidate>
     <div id="search">
-      <input id="address" type="text" name="address" [(ngModel)]="searchAddress" placeholder="Search an address...">
+      <mat-form-field>
+        <input matInput id="address" type="text" name="address" [(ngModel)]="searchAddress"
+               placeholder="Search an address...">
+      </mat-form-field>
+
       <button type="submit" mat-raised-button color="primary">Search !</button>
     </div>
 
@@ -22,47 +26,45 @@
   </form>
 </div>
 
-<div id="map">
-  <agm-map class="map" [latitude]="mapCenter.lat" [longitude]="mapCenter.lng" [zoom]="12">
-    <app-route [from]="routeOrigin" [to]="routeDestination" [waypoints]="waypoints" [keepMapZoomOnDisplay]="true">
-    </app-route>
+<div class="map-details">
+  <div class="map">
+    <agm-map [latitude]="mapCenter.lat" [longitude]="mapCenter.lng" [zoom]="12">
+      <app-route [from]="routeOrigin" [to]="routeDestination" [waypoints]="waypoints" [keepMapZoomOnDisplay]="true">
+      </app-route>
 
-    <agm-marker [latitude]="workLocation.lat" [longitude]="workLocation.lng"
-                [title]="'Agence de Nantes'" [label]="'O'">
-      <agm-info-window>OAB Nantes</agm-info-window>
-    </agm-marker>
+      <agm-marker [latitude]="workLocation.lat" [longitude]="workLocation.lng"
+                  [title]="'Agence de Nantes'" [label]="'O'">
+        <agm-info-window>OAB Nantes</agm-info-window>
+      </agm-marker>
 
-    <agm-marker *ngFor="let coworker of coworkers"
-                [latitude]="coworker.address.lat" [longitude]="coworker.address.lng">
-      <agm-info-window>{{coworker.name}}</agm-info-window>
-    </agm-marker>
+      <agm-marker *ngFor="let coworker of coworkers" [latitude]="coworker.address.lat"
+                  [longitude]="coworker.address.lng"
+                  (markerClick)="select(coworker)">
+        <agm-info-window>{{coworker.name}}</agm-info-window>
+      </agm-marker>
 
-    <agm-marker *ngFor="let address of otherAddresses"
-                [latitude]="address.lat" [longitude]="address.lng"
-                (markerClick)="displayRouteFrom(address)">
-    </agm-marker>
-  </agm-map>
-</div>
-
-
-<div class="coworkers">
-  <h3>Coworker list</h3>
-  <div>
-    <app-coworker-card *ngFor="let coworker of coworkers" [coworker]="coworker"
-                       [canSetAsOrigin]="!alreadyOrigin(coworker.address) && !alreadyDestination(coworker.address)"
-                       [canSetAsDestination]="!alreadyDestination(coworker.address)"
-                       [canAddAsWaypoint]="!alreadyWaypoint(coworker.address) && !alreadyOrigin(coworker.address)
-                              && !alreadyDestination(coworker.address)"
-                       [canUnsetAsOrigin]="alreadyOrigin(coworker.address)"
-                       [canUnsetAsDestination]="alreadyDestination(coworker.address)"
-                       [canRemoveAsWaypoint]="alreadyWaypoint(coworker.address)"
-                       (setAsOrigin)="displayRouteFrom($event)"
-                       (setAsDestination)="displayRouteTo($event)"
-                       (addedAsWaypoint)="addWaypoint($event)"
-                       (unsetAsOrigin)="resetOrigin()"
-                       (unsetAsDestination)="resetDestination()"
-                       (removedAsWaypoint)="removeWaypoint($event)">
-    </app-coworker-card>
+      <agm-marker *ngFor="let address of otherAddresses" [latitude]="address.lat" [longitude]="address.lng"
+                  (markerClick)="select(address)">
+      </agm-marker>
+    </agm-map>
   </div>
 
+  <app-coworker-card *ngIf="selectedCoworker" [coworker]="selectedCoworker"
+                     [canSetAsOrigin]="!alreadyOrigin && !alreadyDestination"
+                     [canSetAsDestination]="!alreadyDestination"
+                     [canAddAsWaypoint]="!alreadyWaypoint && !alreadyOrigin && !alreadyDestination"
+                     [canUnsetAsOrigin]="alreadyOrigin"
+                     [canUnsetAsDestination]="alreadyDestination"
+                     [canRemoveAsWaypoint]="alreadyWaypoint"
+                     (setAsOrigin)="displayRouteFrom($event)"
+                     (setAsDestination)="displayRouteTo($event)"
+                     (addedAsWaypoint)="addWaypoint($event)"
+                     (unsetAsOrigin)="resetOrigin()"
+                     (unsetAsDestination)="resetDestination()"
+                     (removedAsWaypoint)="removeWaypoint($event)">
+  </app-coworker-card>
 </div>
+
+
+
+

@@ -25,8 +25,12 @@ export class AppComponent implements OnInit {
   public routeDestination: Address = this.workLocation;
   public routeOrigin: Address;
   public coworkers: Array<Coworker> = [];
+  public selectedCoworker: Coworker;
   public otherAddresses: Array<Address> = [];
   public waypoints: Array<Address> = [];
+  public alreadyOrigin = false;
+  public alreadyDestination = false;
+  public alreadyWaypoint = false;
 
   constructor(private gMapsService: GmapsService, private appService: AppService, private snackBar: MatSnackBar) {
   }
@@ -50,18 +54,29 @@ export class AppComponent implements OnInit {
     this.otherAddresses.push(address);
   }
 
+  select(coworker: Coworker): void {
+    this.selectedCoworker = coworker;
+    const address = this.selectedCoworker.address;
+    this.alreadyOrigin = (this.routeOrigin === address);
+    this.alreadyDestination = (this.routeDestination === address);
+    this.alreadyWaypoint = (this.waypoints.indexOf(address) !== -1);
+  }
+
   displayRouteFrom(address: Address): void {
     this.routeOrigin = address;
     this.removeWaypoint(address);
+    this.alreadyOrigin = true;
   }
 
   displayRouteTo(address: Address): void {
     this.routeDestination = address;
     this.removeWaypoint(address);
+    this.alreadyDestination = true;
   }
 
   addWaypoint(address: Address): void {
     this.waypoints.push(address);
+    this.alreadyWaypoint = true;
   }
 
   resetOrigin(): void {
@@ -77,18 +92,6 @@ export class AppComponent implements OnInit {
     if (idx !== -1) {
       this.waypoints.splice(idx, 1);
     }
-  }
-
-  alreadyOrigin(address: Address): boolean {
-    return this.routeOrigin === address;
-  }
-
-  alreadyDestination(address: Address): boolean {
-    return this.routeDestination === address;
-  }
-
-  alreadyWaypoint(address: Address): boolean {
-    return this.waypoints.indexOf(address) !== -1;
   }
 
 }

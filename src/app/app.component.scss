@@ -1,15 +1,15 @@
-.map {
-  width: 80%;
-  height: 600px;
-}
+.map-details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
 
-.coworkers {
-  padding: 30px 0;
+  .map {
+    width: 70%;
 
-  & > div {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+    agm-map {
+      height: 500px;
+    }
   }
 }

@@ -59,7 +59,9 @@ import {
     MatChipsModule,
     MatTooltipModule
   ],
-  providers: [{provide: MAT_DATE_LOCALE, useValue: 'fr-FR'}, {provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: {float: 'always'}}],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'}
+  ],
   exports: [
     MatInputModule,
     MatButtonModule,
