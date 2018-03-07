@@ -14,18 +14,12 @@ export class AppComponent implements OnInit {
   public title = 'Google Maps test';
   public locations: Array<Address> = [];
   public searchAddress = '';
-  public workLocation: Address = {
-    lat: 47.2753091,
-    lng: -1.51228
-  };
-  public mapCenter: Address = {
-    lat: this.workLocation.lat,
-    lng: this.workLocation.lng
-  };
-  public routeDestination: Address = this.workLocation;
+  public workLocation: Address;
+  public routeDestination: Address;
+  public mapCenter: Address;
   public routeOrigin: Address;
   public coworkers: Array<Coworker> = [];
-  public selectedCoworker: Coworker;
+  public selected: Coworker | Address;
   public otherAddresses: Array<Address> = [];
   public waypoints: Array<Address> = [];
   public alreadyOrigin = false;
@@ -36,6 +30,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.appService.getWorkLocation().subscribe((wl: Address) => {
+      this.workLocation = wl;
+      this.mapCenter = wl;
+      this.routeDestination = wl;
+    });
     this.appService.getAllCoworkers().subscribe((coworkers: Array<Coworker>) => this.coworkers = coworkers);
   }
 
@@ -54,12 +53,17 @@ export class AppComponent implements OnInit {
     this.otherAddresses.push(address);
   }
 
-  select(coworker: Coworker): void {
-    this.selectedCoworker = coworker;
-    const address = this.selectedCoworker.address;
-    this.alreadyOrigin = (this.routeOrigin === address);
-    this.alreadyDestination = (this.routeDestination === address);
-    this.alreadyWaypoint = (this.waypoints.indexOf(address) !== -1);
+  select(selected: Coworker | Address): void {
+    this.selected = selected;
+    let address: Address;
+
+    if (selected instanceof Coworker) {
+      address = selected.address;
+    } else {
+      address = selected;
+    }
+
+    this.selectAddress(address);
   }
 
   displayRouteFrom(address: Address): void {
@@ -81,10 +85,12 @@ export class AppComponent implements OnInit {
 
   resetOrigin(): void {
     this.routeOrigin = null;
+    this.alreadyOrigin = false;
   }
 
   resetDestination(): void {
     this.routeDestination = null;
+    this.alreadyDestination = false;
   }
 
   removeWaypoint(address: Address) {
@@ -92,6 +98,13 @@ export class AppComponent implements OnInit {
     if (idx !== -1) {
       this.waypoints.splice(idx, 1);
     }
+    this.alreadyWaypoint = false;
+  }
+
+  private selectAddress(address: Address): void {
+    this.alreadyOrigin = (this.routeOrigin === address);
+    this.alreadyDestination = (this.routeDestination === address);
+    this.alreadyWaypoint = (this.waypoints.indexOf(address) !== -1);
   }
 
 }

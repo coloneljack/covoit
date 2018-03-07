@@ -33,7 +33,8 @@
       </app-route>
 
       <agm-marker [latitude]="workLocation.lat" [longitude]="workLocation.lng"
-                  [title]="'Agence de Nantes'" [label]="'O'">
+                  [title]="'Agence de Nantes'" [label]="'O'"
+                  (markerClick)="select(workLocation)">
         <agm-info-window>OAB Nantes</agm-info-window>
       </agm-marker>
 
@@ -49,20 +50,20 @@
     </agm-map>
   </div>
 
-  <app-coworker-card *ngIf="selectedCoworker" [coworker]="selectedCoworker"
-                     [canSetAsOrigin]="!alreadyOrigin && !alreadyDestination"
-                     [canSetAsDestination]="!alreadyDestination"
-                     [canAddAsWaypoint]="!alreadyWaypoint && !alreadyOrigin && !alreadyDestination"
-                     [canUnsetAsOrigin]="alreadyOrigin"
-                     [canUnsetAsDestination]="alreadyDestination"
-                     [canRemoveAsWaypoint]="alreadyWaypoint"
-                     (setAsOrigin)="displayRouteFrom($event)"
-                     (setAsDestination)="displayRouteTo($event)"
-                     (addedAsWaypoint)="addWaypoint($event)"
-                     (unsetAsOrigin)="resetOrigin()"
-                     (unsetAsDestination)="resetDestination()"
-                     (removedAsWaypoint)="removeWaypoint($event)">
-  </app-coworker-card>
+  <app-coworker-address-card *ngIf="selected" [detail]="selected"
+                             [canSetAsOrigin]="!alreadyOrigin && !alreadyDestination"
+                             [canSetAsDestination]="!alreadyDestination"
+                             [canAddAsWaypoint]="!alreadyWaypoint && !alreadyOrigin && !alreadyDestination"
+                             [canUnsetAsOrigin]="alreadyOrigin"
+                             [canUnsetAsDestination]="alreadyDestination"
+                             [canRemoveAsWaypoint]="alreadyWaypoint"
+                             (setAsOrigin)="displayRouteFrom($event)"
+                             (setAsDestination)="displayRouteTo($event)"
+                             (addedAsWaypoint)="addWaypoint($event)"
+                             (unsetAsOrigin)="resetOrigin()"
+                             (unsetAsDestination)="resetDestination()"
+                             (removedAsWaypoint)="removeWaypoint($event)">
+  </app-coworker-address-card>
 </div>
 
 

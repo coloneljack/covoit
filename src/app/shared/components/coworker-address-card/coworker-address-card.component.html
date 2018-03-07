@@ -1,32 +1,32 @@
 <mat-card>
   <mat-card-header>
     <div mat-card-avatar class="brand-logo"></div>
-    <mat-card-title>{{coworker.firstName}}&nbsp;{{coworker.lastName}}</mat-card-title>
-    <mat-card-subtitle>Ingénieur concepteur</mat-card-subtitle>
+    <mat-card-title>{{title}}</mat-card-title>
+    <mat-card-subtitle>{{subtitle}}</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
-    <div>
+    <div *ngIf="address.streetNumber || address.streetName || address.zip || address.city">
       <div>
         <mat-icon>map</mat-icon>
       </div>
       <div>
-        <span>{{coworker.address.streetNumber}}&nbsp;{{coworker.address.streetName}},&nbsp;</span>
-        <span>{{coworker.address.zip}}&nbsp;{{coworker.address.city}}</span>
+        <span>{{address.streetNumber}}&nbsp;{{address.streetName}},&nbsp;</span>
+        <span>{{address.zip}}&nbsp;{{address.city}}</span>
       </div>
     </div>
-    <div>
+    <div *ngIf="detail.tel">
       <div>
         <mat-icon>phone</mat-icon>
       </div>
-      <div>{{coworker.tel}}</div>
+      <div>{{detail.tel}}</div>
     </div>
-    <div>
+    <div *ngIf="detail.email">
       <div>
         <mat-icon>email</mat-icon>
       </div>
       <div>
-        <a [href]="'mailto:' + coworker.email">{{coworker.email}}</a>
+        <a [href]="'mailto:' + detail.email">{{detail.email}}</a>
       </div>
     </div>
   </mat-card-content>

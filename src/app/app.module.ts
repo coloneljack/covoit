@@ -13,7 +13,7 @@ import { AppComponent } from './app.component';
 import { AppMaterialModule } from './app.material.module';
 import { AppService } from './app.service';
 import './rxjs-operators';
-import { CoworkerCardComponent } from './shared/components/coworker-card/coworker-card.component';
+import { CoworkerAddressCardComponent } from './shared/components/coworker-address-card/coworker-address-card.component';
 import { RouteDirective } from './shared/directives/route.directive';
 import { GmapsService } from './shared/services/gmaps.service';
 
@@ -22,7 +22,7 @@ import { GmapsService } from './shared/services/gmaps.service';
   declarations: [
     AppComponent,
     AddressComponent,
-    CoworkerCardComponent,
+    CoworkerAddressCardComponent,
     RouteDirective
   ],
   imports: [

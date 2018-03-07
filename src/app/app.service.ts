@@ -1,11 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Address } from './shared/entities/address';
 import { Coworker } from './shared/entities/coworker';
 
 @Injectable()
 export class AppService {
 
   constructor() {
+  }
+
+  public getWorkLocation(): Observable<Address> {
+    return Observable.of({
+      lat: 47.2753091,
+      lng: -1.51228,
+      title: 'OAB Nantes',
+      streetNumber: '9',
+      streetName: 'boulevard Nicéphore Niépce',
+      zip: '44300',
+      city: 'Nantes',
+      country: 'France'
+    });
   }
 
   public getAllCoworkers(): Observable<Array<Coworker>> {
