@@ -1,6 +1,10 @@
 mat-card {
   width: 300px;
 
+  &.highlighted {
+    border: #ffe611 4px outset;
+  }
+
   mat-card-content {
     display: flex;
     flex-direction: column;

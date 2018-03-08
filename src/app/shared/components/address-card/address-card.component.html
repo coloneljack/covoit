@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card [ngClass]="{'highlighted': highlighted}">
   <mat-card-header>
     <div mat-card-avatar class="brand-logo"></div>
     <mat-card-title>{{title}}</mat-card-title>
@@ -15,18 +15,18 @@
         <span>{{address.zip}}&nbsp;{{address.city}}</span>
       </div>
     </div>
-    <div *ngIf="detail.tel">
+    <div *ngIf="address.coworker?.tel">
       <div>
         <mat-icon>phone</mat-icon>
       </div>
-      <div>{{detail.tel}}</div>
+      <div>{{address.coworker.tel}}</div>
     </div>
-    <div *ngIf="detail.email">
+    <div *ngIf="address.coworker?.email">
       <div>
         <mat-icon>email</mat-icon>
       </div>
       <div>
-        <a [href]="'mailto:' + detail.email">{{detail.email}}</a>
+        <a [href]="'mailto:' + address.coworker.email">{{address.coworker.email}}</a>
       </div>
     </div>
   </mat-card-content>

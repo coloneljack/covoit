@@ -3,7 +3,6 @@ import { MatSnackBar } from '@angular/material';
 import { GmapsService } from 'app/shared/services/gmaps.service';
 import { AppService } from './app.service';
 import { Address } from './shared/entities/address';
-import { Coworker } from './shared/entities/coworker';
 
 @Component({
   selector: 'app-root',
@@ -17,8 +16,8 @@ export class AppComponent implements OnInit {
   public routeDestination: Address;
   public mapCenter: Address;
   public routeOrigin: Address;
-  public coworkers: Array<Coworker> = [];
-  public selected: Coworker | Address;
+  public coworkerAddresses: Array<Address> = [];
+  public selected: Address;
   public otherAddresses: Array<Address> = [];
   public waypoints: Array<Address> = [];
   public alreadyOrigin = false;
@@ -34,7 +33,7 @@ export class AppComponent implements OnInit {
       this.routeDestination = wl;
       this.otherAddresses.push(wl);
     });
-    this.appService.getAllCoworkers().subscribe((coworkers: Array<Coworker>) => this.coworkers = coworkers);
+    this.appService.getAllCoworkerAddresses().subscribe((coworkerAddresses: Array<Address>) => this.coworkerAddresses = coworkerAddresses);
   }
 
   search(): void {
@@ -52,16 +51,8 @@ export class AppComponent implements OnInit {
     this.otherAddresses.push(address);
   }
 
-  select(selected: Coworker | Address): void {
-    this.selected = selected;
-    let address: Address;
-
-    if (selected instanceof Coworker) {
-      address = selected.address;
-    } else {
-      address = selected;
-    }
-
+  select(address: Address): void {
+    this.selected = address;
     this.selectAddress(address);
   }
 
