@@ -34,6 +34,7 @@
   "devDependencies": {
     "@angular/cli": "^1.7.2",
     "@angular/compiler-cli": "^5.2.5",
+    "@types/googlemaps": "^3.30.7",
     "@types/jasmine": "2.5.38",
     "@types/node": "~6.0.60",
     "codelyzer": "^4.1.0",
