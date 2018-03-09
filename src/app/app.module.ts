@@ -3,7 +3,7 @@ import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
 import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
@@ -15,6 +15,7 @@ import { AppService } from './app.service';
 import './rxjs-operators';
 import { AddressCardComponent } from './shared/components/address-card/address-card.component';
 import { RouteDirective } from './shared/directives/route.directive';
+import { GmapsMapperService } from './shared/services/gmaps-mapper.service';
 import { GmapsService } from './shared/services/gmaps.service';
 
 
@@ -29,6 +30,7 @@ import { GmapsService } from './shared/services/gmaps.service';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     AppMaterialModule,
     AgmCoreModule.forRoot({
@@ -43,6 +45,7 @@ import { GmapsService } from './shared/services/gmaps.service';
       useValue: '/'
     },
     GmapsService,
+    GmapsMapperService,
     AppService,
     GoogleMapsAPIWrapper
   ],

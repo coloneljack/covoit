@@ -2,35 +2,22 @@
   {{title}}
 </h1>
 
-<div>
-  <form #searchAddressForm="ngForm" (ngSubmit)="search()" novalidate>
-    <div id="search">
-      <mat-form-field>
-        <input matInput id="address" type="text" name="address" [(ngModel)]="searchAddress"
-               placeholder="Search an address...">
-      </mat-form-field>
-
-      <button type="submit" mat-raised-button color="primary">Search !</button>
-    </div>
-
-    <div id="results">
-      <h3>Results</h3>
-
-      <div *ngIf="locations.length > 0">
-        <app-address *ngFor="let location of locations" [address]="location"
-                     (addressSelected)="centerMap($event)" (addressAdded)="addMarker($event)"></app-address>
-      </div>
-
-      <div *ngIf="locations.length === 0 && searchAddressForm.submitted">Aucun résultat</div>
-    </div>
-  </form>
-</div>
-
 <div class="map-container">
   <div class="map">
-    <agm-map [latitude]="mapCenter.lat" [longitude]="mapCenter.lng" [zoom]="12">
+    <mat-form-field>
+      <input matInput id="address" type="text" placeholder="Rechercher une adresse..."
+             #search [formControl]="searchControl">
+    </mat-form-field>
+
+    <agm-map [latitude]="mapCenter.lat" [longitude]="mapCenter.lng" [zoom]="zoom"
+             [mapTypeControl]="true"
+             [mapTypeControlOptions]="{mapTypeIds: ['roadmap', 'hybrid', 'satellite', 'terrain']}">
       <app-route [from]="routeOrigin" [to]="routeDestination" [waypoints]="waypoints" [keepMapZoomOnDisplay]="true">
       </app-route>
+
+      <agm-marker *ngIf="searchAddress" [latitude]="searchAddress.lat" [longitude]="searchAddress.lng"
+                  (markerClick)="select(searchAddress)">
+      </agm-marker>
 
       <agm-marker *ngFor="let coworkerAddress of coworkerAddresses"
                   [latitude]="coworkerAddress.lat" [longitude]="coworkerAddress.lng"

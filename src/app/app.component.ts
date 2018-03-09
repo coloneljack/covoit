@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { MapsAPILoader } from '@agm/core';
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { GmapsService } from 'app/shared/services/gmaps.service';
 import { AppService } from './app.service';
 import { Address } from './shared/entities/address';
+import {} from 'googlemaps';
+import { GmapsMapperService } from './shared/services/gmaps-mapper.service';
 
 @Component({
   selector: 'app-root',
@@ -10,9 +13,12 @@ import { Address } from './shared/entities/address';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+  @ViewChild('search')
+  public searchElementRef: ElementRef;
+
   public title = 'Covoit\' OAB';
-  public locations: Array<Address> = [];
-  public searchAddress = '';
+  public searchAddress: Address;
   public routeDestination: Address;
   public mapCenter: Address;
   public routeOrigin: Address;
@@ -23,24 +29,22 @@ export class AppComponent implements OnInit {
   public alreadyOrigin = false;
   public alreadyDestination = false;
   public alreadyWaypoint = false;
+  public searchControl: FormControl;
+  public zoom = 12;
 
-  constructor(private gMapsService: GmapsService, private appService: AppService, private snackBar: MatSnackBar) {
+  constructor(private gMapsMapperService: GmapsMapperService, private appService: AppService, private mapsAPILoader: MapsAPILoader,
+              private ngZone: NgZone, private snackBar: MatSnackBar, private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
+    this.searchControl = this.fb.control('');
+    this.loadSearchAutocomplete();
     this.appService.getWorkLocation().subscribe((wl: Address) => {
       this.mapCenter = wl;
       this.routeDestination = wl;
       this.otherAddresses.push(wl);
     });
     this.appService.getAllCoworkerAddresses().subscribe((coworkerAddresses: Array<Address>) => this.coworkerAddresses = coworkerAddresses);
-  }
-
-  search(): void {
-    this.gMapsService.getPotentialLocations(this.searchAddress).subscribe(
-      (locations: Array<Address>) => this.locations = locations,
-      error => this.snackBar.open(`An error occurred : ${error}`, 'Got it!', {duration: 5000})
-    );
   }
 
   centerMap(center: Address): void {
@@ -89,6 +93,29 @@ export class AppComponent implements OnInit {
       this.waypoints.splice(idx, 1);
     }
     this.alreadyWaypoint = false;
+  }
+
+  private loadSearchAutocomplete(): void {
+    this.mapsAPILoader.load().then(() => {
+      const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        componentRestrictions: {
+          country: 'fr'
+        }
+      });
+
+      autocomplete.addListener('place_changed', () => {
+        this.ngZone.run(() => {
+          const place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          const addressFound = this.gMapsMapperService.toAddress(place);
+
+          if (addressFound) {
+            // set address and map center
+            this.searchAddress = addressFound;
+            this.mapCenter = addressFound;
+          }
+        });
+      });
+    });
   }
 
   private selectAddress(address: Address): void {
