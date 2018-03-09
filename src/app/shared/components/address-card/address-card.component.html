@@ -11,8 +11,10 @@
         <mat-icon>map</mat-icon>
       </div>
       <div>
-        <span>{{address.streetNumber}}&nbsp;{{address.streetName}},&nbsp;</span>
-        <span>{{address.zip}}&nbsp;{{address.city}}</span>
+        <span *ngIf="address.streetNumber">{{address.streetNumber}}&nbsp;</span>
+        <span *ngIf="address.streetName">{{address.streetName}},&nbsp;</span>
+        <span *ngIf="address.zip">{{address.zip}}&nbsp;</span>
+        <span *ngIf="address.city">{{address.city}}</span>
       </div>
     </div>
     <div *ngIf="address.coworker?.tel">
