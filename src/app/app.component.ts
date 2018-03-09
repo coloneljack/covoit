@@ -51,10 +51,6 @@ export class AppComponent implements OnInit {
     this.mapCenter = center;
   }
 
-  addMarker(address: Address): void {
-    this.otherAddresses.push(address);
-  }
-
   select(address: Address): void {
     this.selected = address;
     this.selectAddress(address);
@@ -64,17 +60,20 @@ export class AppComponent implements OnInit {
     this.routeOrigin = address;
     this.removeWaypoint(address);
     this.alreadyOrigin = true;
+    this.addMarker(address);
   }
 
   displayRouteTo(address: Address): void {
     this.routeDestination = address;
     this.removeWaypoint(address);
     this.alreadyDestination = true;
+    this.addMarker(address);
   }
 
   addWaypoint(address: Address): void {
     this.waypoints.push(address);
     this.alreadyWaypoint = true;
+    this.addMarker(address);
   }
 
   resetOrigin(): void {
@@ -95,6 +94,12 @@ export class AppComponent implements OnInit {
     this.alreadyWaypoint = false;
   }
 
+  private addMarker(address: Address): void {
+    if (this.coworkerAddresses.indexOf(address) === -1 && this.otherAddresses.indexOf(address) === -1) {
+      this.otherAddresses.push(address);
+    }
+  }
+
   private loadSearchAutocomplete(): void {
     this.mapsAPILoader.load().then(() => {
       const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
@@ -112,6 +117,7 @@ export class AppComponent implements OnInit {
             // set address and map center
             this.searchAddress = addressFound;
             this.mapCenter = addressFound;
+            this.selected = addressFound;
           }
         });
       });
