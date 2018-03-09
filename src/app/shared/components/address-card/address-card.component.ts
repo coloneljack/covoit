@@ -50,6 +50,9 @@ export class AddressCardComponent implements OnInit {
   @Output()
   public removedAsWaypoint = new EventEmitter<void>();
 
+  @Output()
+  public centered = new EventEmitter<void>();
+
   constructor() {
   }
 
@@ -86,6 +89,14 @@ export class AddressCardComponent implements OnInit {
 
   public removeAsWaypoint(): void {
     this.removedAsWaypoint.emit();
+  }
+
+  public center(): void {
+    this.centered.emit();
+  }
+
+  private hasAction(event: EventEmitter<any>): boolean {
+    return event.observers.length > 0;
   }
 
 }

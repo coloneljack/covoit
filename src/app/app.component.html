@@ -43,7 +43,8 @@
                         [canUnsetAsOrigin]="true"
                         [canUnsetAsDestination]="false"
                         [canRemoveAsWaypoint]="false"
-                        (unsetAsOrigin)="resetOrigin()">
+                        (unsetAsOrigin)="resetOrigin()"
+                        (centered)="centerMap(routeOrigin)">
       </app-address-card>
     </div>
 
@@ -57,7 +58,8 @@
                         [canUnsetAsOrigin]="false"
                         [canUnsetAsDestination]="true"
                         [canRemoveAsWaypoint]="false"
-                        (unsetAsDestination)="resetDestination()">
+                        (unsetAsDestination)="resetDestination()"
+                        (centered)="centerMap(routeDestination)">
       </app-address-card>
     </div>
 
@@ -75,7 +77,8 @@
                         (addedAsWaypoint)="addWaypoint(selected)"
                         (unsetAsOrigin)="resetOrigin()"
                         (unsetAsDestination)="resetDestination()"
-                        (removedAsWaypoint)="removeWaypoint(selected)">
+                        (removedAsWaypoint)="removeWaypoint(selected)"
+                        (centered)="centerMap(selected)">
       </app-address-card>
     </div>
   </div>
@@ -94,7 +97,8 @@
                     (addedAsWaypoint)="addWaypoint(waypoint)"
                     (unsetAsOrigin)="resetOrigin()"
                     (unsetAsDestination)="resetDestination()"
-                    (removedAsWaypoint)="removeWaypoint(waypoint)">
+                    (removedAsWaypoint)="removeWaypoint(waypoint)"
+                    (centered)="centerMap(waypoint)">
   </app-address-card>
 </div>
 

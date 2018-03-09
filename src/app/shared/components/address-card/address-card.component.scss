@@ -33,6 +33,10 @@ mat-card {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+
+    button {
+      min-width: initial;
+    }
   }
 }
 

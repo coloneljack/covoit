@@ -34,31 +34,35 @@
   </mat-card-content>
 
   <mat-card-actions>
-    <button type="button" *ngIf="canSetAsOrigin" mat-button title="Set as origin"
-            (click)="setOrigin()">
+    <button type="button" mat-button title="Set as origin" (click)="setOrigin()"
+            *ngIf="hasAction(setAsOrigin) && canSetAsOrigin">
       <i class="far fa-flag fa-lg"></i>
     </button>
-    <button type="button" *ngIf="canUnsetAsOrigin" mat-button title="Unset origin"
-            (click)="unsetOrigin()">
+    <button type="button" mat-button title="Unset origin" (click)="unsetOrigin()"
+            *ngIf="hasAction(unsetAsOrigin) && canUnsetAsOrigin">
       <i class="far fa-flag fa-lg crossed"></i>
     </button>
 
-    <button type="button" *ngIf="canSetAsDestination" mat-button title="Set as destination"
-            (click)="setDestination()">
+    <button type="button" mat-button title="Set as destination" (click)="setDestination()"
+            *ngIf="hasAction(setAsDestination) && canSetAsDestination">
       <i class="fas fa-flag-checkered fa-lg"></i>
     </button>
-    <button type="button" *ngIf="canUnsetAsDestination" mat-button title="Unset destination"
-            (click)="unsetDestination()">
+    <button type="button" mat-button title="Unset destination" (click)="unsetDestination()"
+            *ngIf="hasAction(unsetAsDestination) && canUnsetAsDestination">
       <i class="fas fa-flag-checkered fa-lg crossed"></i>
     </button>
 
-    <button type="button" *ngIf="canAddAsWaypoint" mat-button title="Add as waypoint"
-            (click)="addAsWaypoint()">
+    <button type="button" mat-button title="Add as waypoint" (click)="addAsWaypoint()"
+            *ngIf="hasAction(addedAsWaypoint) && canAddAsWaypoint">
       <i class="fas fa-map-marker fa-lg"></i>
     </button>
-    <button type="button" *ngIf="canRemoveAsWaypoint" mat-button title="Remove waypoint"
-            (click)="removeAsWaypoint()">
+    <button type="button" mat-button title="Remove waypoint" (click)="removeAsWaypoint()"
+            *ngIf="hasAction(removedAsWaypoint) && canRemoveAsWaypoint">
       <i class="fas fa-map-marker fa-lg crossed"></i>
+    </button>
+
+    <button type="button" mat-button title="Center" (click)="center()" *ngIf="hasAction(centered)">
+      <mat-icon>center_focus_strong</mat-icon>
     </button>
   </mat-card-actions>
 </mat-card>
