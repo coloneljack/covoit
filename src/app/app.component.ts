@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
 
   public title = 'Covoit\' OAB';
   public searchAddress: Address;
+  public workLocation: Address;
   public routeDestination: Address;
   public mapCenter: Address;
   public routeOrigin: Address;
@@ -42,7 +43,7 @@ export class AppComponent implements OnInit {
     this.appService.getWorkLocation().subscribe((wl: Address) => {
       this.mapCenter = wl;
       this.routeDestination = wl;
-      this.otherAddresses.push(wl);
+      this.workLocation = wl;
     });
     this.appService.getAllCoworkerAddresses().subscribe((coworkerAddresses: Array<Address>) => this.coworkerAddresses = coworkerAddresses);
   }
@@ -95,7 +96,7 @@ export class AppComponent implements OnInit {
   }
 
   private addMarker(address: Address): void {
-    if (this.coworkerAddresses.indexOf(address) === -1 && this.otherAddresses.indexOf(address) === -1) {
+    if (this.coworkerAddresses.indexOf(address) === -1 && this.otherAddresses.indexOf(address) === -1 && this.workLocation !== address) {
       this.otherAddresses.push(address);
     }
   }
