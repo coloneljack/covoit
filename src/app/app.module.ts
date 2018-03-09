@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
-import { AddressComponent } from './address/address.component';
 
 import { AppComponent } from './app.component';
 import { AppMaterialModule } from './app.material.module';
@@ -22,7 +21,6 @@ import { GmapsService } from './shared/services/gmaps.service';
 @NgModule({
   declarations: [
     AppComponent,
-    AddressComponent,
     AddressCardComponent,
     RouteDirective
   ],
