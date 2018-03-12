@@ -1,0 +1,12 @@
+<div class="sidebar-container">
+  <mat-nav-list>
+    <mat-list-item class="sidebar-item" [ngClass]="{'selected': link.selected}" *ngFor="let link of links"
+                   (click)="select(link)">
+      <a matLine>
+        <mat-icon>{{link.icon}}</mat-icon>
+        <br/>
+        {{link.label}}
+      </a>
+    </mat-list-item>
+  </mat-nav-list>
+</div>

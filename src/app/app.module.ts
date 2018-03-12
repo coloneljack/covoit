@@ -1,3 +1,6 @@
+import './rxjs-operators';
+import {} from 'googlemaps';
+
 import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
 import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
 import { APP_BASE_HREF } from '@angular/common';
@@ -6,23 +9,33 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 import { environment } from '../environments/environment';
-
 import { AppComponent } from './app.component';
 import { AppMaterialModule } from './app.material.module';
+import { ROUTES } from './app.routes.module';
 import { AppService } from './app.service';
-import './rxjs-operators';
 import { AddressCardComponent } from './shared/components/address-card/address-card.component';
 import { RouteDirective } from './shared/directives/route.directive';
 import { GmapsMapperService } from './shared/services/gmaps-mapper.service';
 import { GmapsService } from './shared/services/gmaps.service';
+import { UserInfoComponent } from './user-info/user-info.component';
+import { AroundMeComponent } from './around-me/around-me.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { LoginComponent } from './login/login.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     AddressCardComponent,
-    RouteDirective
+    RouteDirective,
+    UserInfoComponent,
+    AroundMeComponent,
+    PageNotFoundComponent,
+    LoginComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
@@ -31,6 +44,7 @@ import { GmapsService } from './shared/services/gmaps.service';
     ReactiveFormsModule,
     HttpClientModule,
     AppMaterialModule,
+    RouterModule.forRoot(ROUTES),
     AgmCoreModule.forRoot({
       apiKey: environment.GOOGLE_MAPS_API_KEY,
       libraries: ['places']

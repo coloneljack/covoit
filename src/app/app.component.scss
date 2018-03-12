@@ -1,15 +1,25 @@
-.map-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  align-items: center;
+@import '../variables';
 
-  .map {
-    width: 70%;
+div {
+  background-color: #ffffff;
 
-    agm-map {
-      height: 500px;
-    }
+  &.main {
+    margin: 0 auto 0 auto;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    min-width: $screen-min-width;
+    max-width: $screen-max-width;
+    min-height: $screen-min-height;
+  }
+
+  &.main-sidebar {
+    width: 100px;
+    flex: 0;
+  }
+
+  &.main-content {
+    height: 100%;
+    flex: 1;
   }
 }
