@@ -1,9 +1,11 @@
-<div class="main">
-  <div class="main-sidebar">
+<mat-sidenav-container class="main">
+  <mat-sidenav #sidenav class="main-sidebar" mode="push">
     <app-sidebar></app-sidebar>
-  </div>
-
-  <div class="main-content">
-    <router-outlet></router-outlet>
-  </div>
-</div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-header [showMenuButton]="!sidenav.opened" (menuButtonClicked)="sidenav.toggle()" [user]="user"></app-header>
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

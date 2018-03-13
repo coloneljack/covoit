@@ -20,10 +20,10 @@ export class SidebarComponent implements OnInit {
     ];
   }
 
-  select(link: NavLink) {
+  async select(link: NavLink) {
     link.selected = true;
     this.links.filter(l => l !== link).forEach(l => l.selected = false);
-    this.router.navigate([link.routerLink]);
+    await this.router.navigate([link.routerLink]);
   }
 
 }

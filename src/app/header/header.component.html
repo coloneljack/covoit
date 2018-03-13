@@ -1,0 +1,23 @@
+<div class="main-header">
+  <div>
+    <button mat-button class="toggle-sidebar" *ngIf="showMenuButton" (click)="clickMenuButton()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+
+  <div class="toolbar">
+    <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
+      <div mat-menu-item>
+        INSERT USER CARD HERE
+      </div>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>eject</mat-icon>&nbsp;Se déconnecter
+      </button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="userMenu">
+      {{user.firstName}}&nbsp;{{user.lastName}}&nbsp;<mat-icon>person</mat-icon>
+    </button>
+  </div>
+</div>
+
+

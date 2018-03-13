@@ -24,6 +24,7 @@ import { AroundMeComponent } from './around-me/around-me.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LoginComponent } from './login/login.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { HeaderComponent } from './header/header.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     AroundMeComponent,
     PageNotFoundComponent,
     LoginComponent,
-    SidebarComponent
+    SidebarComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

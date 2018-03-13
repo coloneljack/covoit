@@ -19,7 +19,7 @@ import {
   MatNativeDateModule,
   MatPaginatorModule,
   MatRadioModule,
-  MatSelectModule,
+  MatSelectModule, MatSidenavModule,
   MatSlideToggleModule,
   MatSnackBarModule,
   MatSortModule,
@@ -32,6 +32,7 @@ import {
 
 @NgModule({
   imports: [
+    MatSidenavModule,
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
@@ -63,6 +64,7 @@ import {
     {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'}
   ],
   exports: [
+    MatSidenavModule,
     MatInputModule,
     MatButtonModule,
     MatSelectModule,

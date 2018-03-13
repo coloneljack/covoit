@@ -1,25 +1,19 @@
 @import '../variables';
 
-div {
+.main {
   background-color: #ffffff;
+  margin: 0 auto 0 auto;
+  height: 100%;
+  min-width: $screen-min-width;
+  max-width: $screen-max-width;
+  min-height: $screen-min-height;
 
-  &.main {
-    margin: 0 auto 0 auto;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    min-width: $screen-min-width;
-    max-width: $screen-max-width;
-    min-height: $screen-min-height;
+  .main-sidebar {
+    width: 200px;
   }
 
-  &.main-sidebar {
-    width: 100px;
-    flex: 0;
-  }
-
-  &.main-content {
-    height: 100%;
-    flex: 1;
+  .main-content {
+    height: calc(100% - 65px);
+    overflow: auto;
   }
 }
