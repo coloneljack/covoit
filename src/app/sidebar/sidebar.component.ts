@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavLink } from './nav-link';
 
@@ -8,6 +8,8 @@ import { NavLink } from './nav-link';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
+
+  @Output() public linkClicked = new EventEmitter<void>();
 
   public links: Array<NavLink> = [];
 
@@ -25,6 +27,7 @@ export class SidebarComponent implements OnInit {
     link.selected = true;
     this.links.filter(l => l !== link).forEach(l => l.selected = false);
     await this.router.navigate([link.routerLink]);
+    this.linkClicked.emit();
   }
 
 }

@@ -1,29 +1,28 @@
 .sidebar-container {
   height: 100%;
-  display: flex;
-  flex-direction: column;
-}
+  padding: 0 15px;
 
-mat-nav-list {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  mat-nav-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 
-  mat-list-item {
-    height: 100%;
-    width: 100px;
-    font-size: 12px;
-    vertical-align: middle;
-    flex: 1;
-
-    &.selected {
-      background-color: darkorange;
-      color: white;
-    }
-
-    a {
+    mat-list-item {
       height: 100%;
-      text-align: center;
+      width: 100%;
+      font-size: 12px;
+      vertical-align: middle;
+      padding: 20px 0;
+
+      &.selected {
+        background-color: darkorange;
+        color: white;
+      }
+
+      a {
+        height: 100%;
+        text-align: center;
+      }
     }
   }
 }
