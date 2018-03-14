@@ -4,4 +4,7 @@ export interface Coworker {
   tel?: string;
   email?: string;
   job?: string;
+  type?: string;
+  seats?: number;
+  workingHours?: string;
 }

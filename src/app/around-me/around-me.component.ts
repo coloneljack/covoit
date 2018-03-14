@@ -2,9 +2,9 @@ import { MapsAPILoader } from '@agm/core';
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { AppService } from '../app.service';
 import { Address } from '../shared/entities/address';
 import { GmapsMapperService } from '../shared/services/gmaps-mapper.service';
+import { AroundMeService } from './around-me.service';
 
 @Component({
   selector: 'app-around-me',
@@ -32,19 +32,19 @@ export class AroundMeComponent implements OnInit {
   public searchControl: FormControl;
   public zoom = 12;
 
-  constructor(private gMapsMapperService: GmapsMapperService, private appService: AppService, private mapsAPILoader: MapsAPILoader,
+  constructor(private gMapsMapperService: GmapsMapperService, private aroundMeService: AroundMeService, private mapsAPILoader: MapsAPILoader,
               private ngZone: NgZone, private snackBar: MatSnackBar, private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
     this.searchControl = this.fb.control('');
     this.loadSearchAutocomplete();
-    this.appService.getWorkLocation().subscribe((wl: Address) => {
+    this.aroundMeService.getWorkLocation().subscribe((wl: Address) => {
       this.mapCenter = wl;
       this.routeDestination = wl;
       this.workLocation = wl;
     });
-    this.appService.getAllCoworkerAddresses().subscribe((coworkerAddresses: Array<Address>) => this.coworkerAddresses = coworkerAddresses);
+    this.aroundMeService.getAllCoworkerAddresses().subscribe((coworkerAddresses: Array<Address>) => this.coworkerAddresses = coworkerAddresses);
   }
 
   centerMap(center: Address): void {

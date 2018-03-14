@@ -14,7 +14,7 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AppMaterialModule } from './app.material.module';
 import { ROUTES } from './app.routes.module';
-import { AppService } from './app.service';
+import { AroundMeService } from './around-me/around-me.service';
 import { AddressCardComponent } from './shared/components/address-card/address-card.component';
 import { FieldMessageDirective } from './shared/directives/field-message.directive';
 import { RouteDirective } from './shared/directives/route.directive';
@@ -27,6 +27,7 @@ import { LoginComponent } from './login/login.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
+import { UserInfoService } from './user-info/user-info.service';
 
 
 @NgModule({
@@ -64,8 +65,9 @@ import { HomeComponent } from './home/home.component';
     },
     GmapsService,
     GmapsMapperService,
-    AppService,
-    GoogleMapsAPIWrapper
+    AroundMeService,
+    GoogleMapsAPIWrapper,
+    UserInfoService
   ],
   bootstrap: [AppComponent]
 })

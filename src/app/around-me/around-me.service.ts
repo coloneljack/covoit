@@ -1,13 +1,12 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Address } from './shared/entities/address';
-import { Coworker } from './shared/entities/coworker';
+import { Address } from '../shared/entities/address';
 
 @Injectable()
-export class AppService {
+export class AroundMeService {
 
-  constructor() {
-  }
+  constructor(private http: HttpClient) {}
 
   public getWorkLocation(): Observable<Address> {
     return Observable.of({

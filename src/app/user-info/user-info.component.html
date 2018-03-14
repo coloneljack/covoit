@@ -1,56 +1,84 @@
-<div>
+<div class="form-container">
   <form [formGroup]="userInfoForm" (ngSubmit)="save()" novalidate>
-    <mat-form-field>
-      <input type="text" matInput placeholder="Nom *" formControlName="nom">
-      <mat-error *ngIf="nom.invalid" [appFieldMessage]="nom"></mat-error>
-    </mat-form-field>
+    <div class="form-content">
+      <div class="form-row">
+        <div class="form-field">
+          <mat-form-field>
+            <input type="text" matInput placeholder="Prénom *" formControlName="firstName">
+            <mat-error *ngIf="firstName.invalid" [appFieldMessage]="firstName"></mat-error>
+          </mat-form-field>
+        </div>
 
-    <mat-form-field>
-      <input type="text" matInput placeholder="Prénom *" formControlName="prenom">
-      <mat-error *ngIf="prenom.invalid" [appFieldMessage]="prenom"></mat-error>
-    </mat-form-field>
+        <div class="form-field">
+          <mat-form-field>
+            <input type="text" matInput placeholder="Nom *" formControlName="lastName">
+            <mat-error *ngIf="lastName.invalid" [appFieldMessage]="lastName"></mat-error>
+          </mat-form-field>
+        </div>
 
-    <mat-form-field>
-      <input type="text" matInput placeholder="Adresse *" formControlName="adresse">
-      <mat-error *ngIf="adresse.invalid" [appFieldMessage]="adresse"></mat-error>
-    </mat-form-field>
+        <div class="form-field">
+          <mat-form-field>
+            <input type="text" matInput placeholder="E-mail" formControlName="email">
+            <mat-error *ngIf="email.invalid" [appFieldMessage]="email"
+                       [patternMessage]="'Format d\'e-mail incorrect.'"></mat-error>
+          </mat-form-field>
+        </div>
 
-    <mat-form-field>
-      <input type="text" matInput placeholder="Numéro de téléphone" formControlName="tel">
-      <mat-hint align="start">4 ou 10 chiffres</mat-hint>
-      <mat-error *ngIf="tel.invalid" [appFieldMessage]="tel"
-                 [patternMessage]="'Format de numéro incorrect. Attendu : 4 chiffres (numéro interne) ou 10 chiffres commençant par un 0 (numéro standard).'"></mat-error>
-    </mat-form-field>
+        <div class="form-field">
+          <mat-form-field>
+            <input type="text" matInput placeholder="Numéro de téléphone" formControlName="tel">
+            <mat-hint align="start">4 ou 10 chiffres</mat-hint>
+            <mat-error *ngIf="tel.invalid" [appFieldMessage]="tel"
+                       [patternMessage]="'Format de numéro incorrect. Attendu : 4 chiffres (numéro interne) ou 10 chiffres commençant par un 0.'"></mat-error>
+          </mat-form-field>
+        </div>
 
-    <mat-form-field>
-      <input type="text" matInput placeholder="E-mail" formControlName="email">
-      <mat-error *ngIf="email.invalid" [appFieldMessage]="email"
-                 [patternMessage]="'Format d\'e-mail incorrect.'"></mat-error>
-    </mat-form-field>
+        <div class="form-field">
+          <mat-form-field>
+            <input type="text" matInput placeholder="Poste" formControlName="job">
+            <mat-hint align="start">saisie libre</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
 
-    <mat-list class="radio-group">
-      <label mat-subheader for="type">Type *</label>
-      <mat-radio-group id="type" formControlName="type" (change)="changeType()">
-        <mat-radio-button [value]="'C'" color="primary">Conducteur</mat-radio-button>
-        <mat-radio-button [value]="'P'" color="primary">Passager</mat-radio-button>
-        <mat-radio-button [value]="'CP'" color="primary">Les deux</mat-radio-button>
-      </mat-radio-group>
-    </mat-list>
+      <div class="form-row">
+        <div class="map">
 
-    <mat-form-field>
-      <input type="number" matInput placeholder="Places disponibles" formControlName="places" min="0" max="9">
-      <mat-error *ngIf="places.invalid" [appFieldMessage]="places"></mat-error>
-    </mat-form-field>
+        </div>
+      </div>
 
-    <mat-form-field>
-      <textarea matInput placeholder="Horaires/disponibilités semaine" matTextareaAutosize matAutosizeMinRows="3"
-                maxlength="255" #precDispo formControlName="dispo">
-      </textarea>
-      <mat-hint align="start">Préciser les horaires et jours de travail si non standard (saisie libre)</mat-hint>
-      <mat-hint align="end">{{precDispo.value.length}} / 255</mat-hint>
-    </mat-form-field>
+      <div class="form-row">
+        <div class="form-field">
+          <mat-list class="radio-group">
+            <label mat-subheader for="type">Type *</label>
+            <mat-radio-group id="type" formControlName="type" (change)="changeType()">
+              <mat-radio-button [value]="'C'" color="primary">Conducteur</mat-radio-button>
+              <mat-radio-button [value]="'P'" color="primary">Passager</mat-radio-button>
+              <mat-radio-button [value]="'CP'" color="primary">Les deux</mat-radio-button>
+            </mat-radio-group>
+          </mat-list>
+        </div>
 
-    <div class="buttons">
+        <div class="form-field" *ngIf="isDriver()">
+          <mat-form-field>
+            <input type="number" matInput placeholder="Places disponibles" formControlName="seats" min="0" max="9">
+            <mat-error *ngIf="seats.invalid" [appFieldMessage]="seats"></mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-field">
+          <mat-form-field>
+            <textarea matInput placeholder="Horaires/disponibilités semaine" matTextareaAutosize
+                      maxlength="255" #precDispo formControlName="workingHours">
+            </textarea>
+            <mat-hint align="start">Préciser les horaires et jours de travail si non standard (saisie libre)</mat-hint>
+            <mat-hint align="end">{{precDispo.value.length}} / 255</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-buttons">
       <button id="cancel-button" type="button" mat-raised-button [routerLink]="'/home'">
         <mat-icon>clear</mat-icon>&nbsp;Annuler
       </button>
@@ -59,6 +87,5 @@
         <mat-icon>check</mat-icon>&nbsp;Valider
       </button>
     </div>
-
   </form>
 </div>

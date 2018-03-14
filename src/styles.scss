@@ -10,3 +10,79 @@
     rgba(0, 0, 0, 0) calc(50% + 3px),
     rgba(0, 0, 0, 0) 100%);
 }
+
+/* Forms */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  .form-header {
+    padding-top: 30px;
+    padding-bottom: 50px;
+    display: flex;
+    justify-content: space-between;
+
+    .title {
+      font-size: 30px;
+      font-weight: bold;
+    }
+  }
+
+  .form-content {
+    mat-expansion-panel {
+      margin-bottom: 10px;
+
+      .subform-part {
+        padding-top: 20px;
+
+        .button-add-item {
+          margin-bottom: 20px;
+        }
+      }
+
+      .button-error {
+        display: flex;
+        align-items: center;
+        button {
+          margin: 0 5px 5px 0;
+        }
+      }
+    }
+  }
+
+  .form-buttons {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      margin: 10px;
+    }
+  }
+}
+
+.form-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .form-field {
+    flex: 1;
+    display: flex;
+
+    mat-form-field, mat-checkbox, mat-list.radio-group, mat-slide-toggle {
+      flex: 1;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+}

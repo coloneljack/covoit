@@ -16,10 +16,10 @@ export class AppComponent implements OnInit {
   public ngOnInit(): void {
     // TODO get connected user
     this.user = {
-      firstName: 'Jean-Claude',
-      lastName: 'Van Damme',
-      email: 'jcvd@aware.com',
-      tel: '0654879532'
+      firstName: 'Vincent',
+      lastName: 'Nourry',
+      email: 'vincent.nourry@orange.com',
+      tel: '1409'
     };
   }
 
