@@ -16,6 +16,7 @@ import { AppMaterialModule } from './app.material.module';
 import { ROUTES } from './app.routes.module';
 import { AppService } from './app.service';
 import { AddressCardComponent } from './shared/components/address-card/address-card.component';
+import { FieldMessageDirective } from './shared/directives/field-message.directive';
 import { RouteDirective } from './shared/directives/route.directive';
 import { GmapsMapperService } from './shared/services/gmaps-mapper.service';
 import { GmapsService } from './shared/services/gmaps.service';
@@ -33,12 +34,13 @@ import { HomeComponent } from './home/home.component';
     AppComponent,
     AddressCardComponent,
     RouteDirective,
+    FieldMessageDirective,
     UserInfoComponent,
     AroundMeComponent,
     PageNotFoundComponent,
     LoginComponent,
     SidebarComponent,
-    HeaderComponent
+    HeaderComponent,
     HomeComponent
   ],
   imports: [
