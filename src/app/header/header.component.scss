@@ -11,6 +11,14 @@
       height: 100%;
     }
 
+    &.title {
+      display: flex;
+      align-items: center;
+      font-family: Andalus sans-serif;
+      font-size: 36px;
+      font-weight: bold;
+    }
+
     &.toolbar {
       display: flex;
       justify-content: flex-end;
