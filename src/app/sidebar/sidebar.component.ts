@@ -15,6 +15,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.links = [
+      new NavLink('home', 'Accueil', 'home', this.router.url.endsWith('home')),
       new NavLink('user-info', 'Informations utilisateur', 'face', this.router.url.endsWith('user-info')),
       new NavLink('around-me', 'Autour de moi', 'map', this.router.url.endsWith('around-me'))
     ];

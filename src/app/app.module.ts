@@ -25,6 +25,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { LoginComponent } from './login/login.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HeaderComponent } from './header/header.component';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { HeaderComponent } from './header/header.component';
     LoginComponent,
     SidebarComponent,
     HeaderComponent
+    HomeComponent
   ],
   imports: [
     BrowserModule,
