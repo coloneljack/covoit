@@ -12,8 +12,9 @@ import { UserInfoService } from './user-info.service';
 })
 export class UserInfoComponent implements OnInit {
 
+  public address: Address;
+  private mapCenter: Address;
   private userInfoForm: FormGroup;
-  private address: Address;
 
   constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private userInfoService: UserInfoService, private router: Router) {}
 
@@ -44,6 +45,7 @@ export class UserInfoComponent implements OnInit {
   ngOnInit() {
     this.userInfoService.getCurrentUserInfo().subscribe(a => {
       this.address = a;
+      this.mapCenter = a;
       this.initForm();
     });
   }
@@ -86,6 +88,11 @@ export class UserInfoComponent implements OnInit {
     } else {
       this.seats.disable();
     }
+  }
+
+  setAddress(address: Address) {
+    this.address = address;
+    this.mapCenter = address;
   }
 
   private initForm() {

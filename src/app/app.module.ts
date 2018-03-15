@@ -28,6 +28,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { UserInfoService } from './user-info/user-info.service';
+import { SearchMapComponent } from './shared/components/search-map/search-map.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { UserInfoService } from './user-info/user-info.service';
     LoginComponent,
     SidebarComponent,
     HeaderComponent,
-    HomeComponent
+    HomeComponent,
+    SearchMapComponent
   ],
   imports: [
     BrowserModule,

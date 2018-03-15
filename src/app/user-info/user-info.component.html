@@ -42,9 +42,11 @@
       </div>
 
       <div class="form-row">
-        <div class="map">
-
-        </div>
+        <app-search-map [center]="mapCenter"
+                        [searchAddress]="address"
+                        [searchPlaceholder]="'Rechercher mon adresse...'"
+                        (addressFound)="setAddress($event)">
+        </app-search-map>
       </div>
 
       <div class="form-row">
