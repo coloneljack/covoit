@@ -28,13 +28,13 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { UserInfoService } from './user-info/user-info.service';
-import { SearchMapComponent } from './shared/components/search-map/search-map.component';
+import { SearchBoxComponent } from './shared/components/search-box/search-box.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddressCardComponent,
+    UserCardComponent,
     RouteDirective,
     FieldMessageDirective,
     UserInfoComponent,
@@ -44,7 +44,7 @@ import { SearchMapComponent } from './shared/components/search-map/search-map.co
     SidebarComponent,
     HeaderComponent,
     HomeComponent,
-    SearchMapComponent
+    SearchBoxComponent
   ],
   imports: [
     BrowserModule,

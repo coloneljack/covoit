@@ -1,9 +1,12 @@
+import { ControlPosition } from '@agm/core/services/google-maps-types';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { Address } from '../shared/entities/address';
+import { GmapsMapperService } from '../shared/services/gmaps-mapper.service';
 import { UserInfoService } from './user-info.service';
+import PlaceResult = google.maps.places.PlaceResult;
 
 @Component({
   selector: 'app-user-info',
@@ -12,11 +15,14 @@ import { UserInfoService } from './user-info.service';
 })
 export class UserInfoComponent implements OnInit {
 
-  public address: Address;
-  private mapCenter: Address;
-  private userInfoForm: FormGroup;
+  address: Address;
+  mapCenter: Address;
+  userInfoForm: FormGroup;
+  searchBoxPosition: ControlPosition = ControlPosition.TOP_CENTER;
+  foundAddresses: Array<Address> = [];
 
-  constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private userInfoService: UserInfoService, private router: Router) {}
+  constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private userInfoService: UserInfoService, private router: Router,
+              private gMapsMapper: GmapsMapperService) {}
 
   get firstName(): FormControl {
     return this.userInfoForm.get('firstName') as FormControl;
@@ -88,6 +94,10 @@ export class UserInfoComponent implements OnInit {
     } else {
       this.seats.disable();
     }
+  }
+
+  showSearchResults(foundPlaces: Array<PlaceResult>): void {
+    this.foundAddresses = foundPlaces ? foundPlaces.map(this.gMapsMapper.toAddress) : [];
   }
 
   setAddress(address: Address) {

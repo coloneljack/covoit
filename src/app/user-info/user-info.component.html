@@ -1,5 +1,5 @@
 <div class="form-container">
-  <form [formGroup]="userInfoForm" (ngSubmit)="save()" novalidate>
+  <form [formGroup]="userInfoForm" novalidate>
     <div class="form-content">
       <div class="form-row">
         <div class="form-field">
@@ -42,11 +42,29 @@
       </div>
 
       <div class="form-row">
-        <app-search-map [center]="mapCenter"
-                        [searchAddress]="address"
-                        [searchPlaceholder]="'Rechercher mon adresse...'"
-                        (addressFound)="setAddress($event)">
-        </app-search-map>
+        <div class="form-field">
+          <agm-map class="map" [latitude]="mapCenter.lat" [longitude]="mapCenter.lng" [zoom]="12"
+                   [mapTypeControl]="true"
+                   [mapTypeControlOptions]="{mapTypeIds: ['roadmap', 'hybrid', 'satellite', 'terrain']}">
+            <app-search-box [placeholder]="'Chercher une adresse...'" [position]="searchBoxPosition"
+                            (placesChange)="showSearchResults($event)">
+            </app-search-box>
+
+            <agm-marker *ngFor="let foundAddress of foundAddresses"
+                        [latitude]="foundAddress.lat" [longitude]="foundAddress.lng"
+                        [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'"
+                        (markerClick)="setAddress(foundAddress)">
+            </agm-marker>
+
+            <agm-marker *ngIf="address"
+                        [latitude]="address.lat" [longitude]="address.lng"
+                        [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/red-dot.png'">
+            </agm-marker>
+          </agm-map>
+        </div>
+        <div class="form-field">
+          <app-address-card *ngIf="address" [address]="address"></app-address-card>
+        </div>
       </div>
 
       <div class="form-row">
@@ -85,7 +103,7 @@
         <mat-icon>clear</mat-icon>&nbsp;Annuler
       </button>
 
-      <button id="submit-button" type="submit" mat-raised-button color="primary">
+      <button id="submit-button" type="button" mat-raised-button color="primary" (click)="save()">
         <mat-icon>check</mat-icon>&nbsp;Valider
       </button>
     </div>
