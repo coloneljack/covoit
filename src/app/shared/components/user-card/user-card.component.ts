@@ -2,11 +2,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Address } from '../../entities/address';
 
 @Component({
-  selector: 'app-address-card',
-  templateUrl: './address-card.component.html',
-  styleUrls: ['./address-card.component.scss']
+  selector: 'app-user-card',
+  templateUrl: './user-card.component.html',
+  styleUrls: ['./user-card.component.scss']
 })
-export class AddressCardComponent implements OnInit {
+export class UserCardComponent implements OnInit {
 
   @Input()
   public address: Address;

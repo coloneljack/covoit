@@ -15,7 +15,7 @@ import { AppComponent } from './app.component';
 import { AppMaterialModule } from './app.material.module';
 import { ROUTES } from './app.routes.module';
 import { AroundMeService } from './around-me/around-me.service';
-import { AddressCardComponent } from './shared/components/address-card/address-card.component';
+import { UserCardComponent } from './shared/components/user-card/user-card.component';
 import { FieldMessageDirective } from './shared/directives/field-message.directive';
 import { RouteDirective } from './shared/directives/route.directive';
 import { GmapsMapperService } from './shared/services/gmaps-mapper.service';

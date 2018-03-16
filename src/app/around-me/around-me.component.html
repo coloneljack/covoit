@@ -40,69 +40,69 @@
   <div class="marker-details">
     <div *ngIf="routeOrigin">
       <h3>Point de départ</h3>
-      <app-address-card [address]="routeOrigin"
-                        [highlighted]="routeOrigin === selected"
-                        [canSetAsOrigin]="false"
-                        [canSetAsDestination]="false"
-                        [canAddAsWaypoint]="false"
-                        [canUnsetAsOrigin]="true"
-                        [canUnsetAsDestination]="false"
-                        [canRemoveAsWaypoint]="false"
-                        (unsetAsOrigin)="resetOrigin()"
-                        (centered)="centerMap(routeOrigin)">
-      </app-address-card>
+      <app-user-card [address]="routeOrigin"
+                     [highlighted]="routeOrigin === selected"
+                     [canSetAsOrigin]="false"
+                     [canSetAsDestination]="false"
+                     [canAddAsWaypoint]="false"
+                     [canUnsetAsOrigin]="true"
+                     [canUnsetAsDestination]="false"
+                     [canRemoveAsWaypoint]="false"
+                     (unsetAsOrigin)="resetOrigin()"
+                     (centered)="centerMap(routeOrigin)">
+      </app-user-card>
     </div>
 
     <div *ngIf="routeDestination">
       <h3>Arrivée</h3>
-      <app-address-card [address]="routeDestination"
-                        [highlighted]="routeDestination === selected"
-                        [canSetAsOrigin]="false"
-                        [canSetAsDestination]="false"
-                        [canAddAsWaypoint]="false"
-                        [canUnsetAsOrigin]="false"
-                        [canUnsetAsDestination]="true"
-                        [canRemoveAsWaypoint]="false"
-                        (unsetAsDestination)="resetDestination()"
-                        (centered)="centerMap(routeDestination)">
-      </app-address-card>
+      <app-user-card [address]="routeDestination"
+                     [highlighted]="routeDestination === selected"
+                     [canSetAsOrigin]="false"
+                     [canSetAsDestination]="false"
+                     [canAddAsWaypoint]="false"
+                     [canUnsetAsOrigin]="false"
+                     [canUnsetAsDestination]="true"
+                     [canRemoveAsWaypoint]="false"
+                     (unsetAsDestination)="resetDestination()"
+                     (centered)="centerMap(routeDestination)">
+      </app-user-card>
     </div>
 
     <div *ngIf="selected">
       <h3>Sélection</h3>
-      <app-address-card [address]="selected"
-                        [canSetAsOrigin]="!alreadyOrigin && !alreadyDestination"
-                        [canSetAsDestination]="!alreadyOrigin && !alreadyDestination"
-                        [canAddAsWaypoint]="!alreadyWaypoint && !alreadyOrigin && !alreadyDestination"
-                        [canUnsetAsOrigin]="alreadyOrigin"
-                        [canUnsetAsDestination]="alreadyDestination"
-                        [canRemoveAsWaypoint]="alreadyWaypoint"
-                        (setAsOrigin)="displayRouteFrom(selected)"
-                        (setAsDestination)="displayRouteTo(selected)"
-                        (addedAsWaypoint)="addWaypoint(selected)"
-                        (unsetAsOrigin)="resetOrigin()"
-                        (unsetAsDestination)="resetDestination()"
-                        (removedAsWaypoint)="removeWaypoint(selected)"
-                        (centered)="centerMap(selected)">
-      </app-address-card>
+      <app-user-card [address]="selected"
+                     [canSetAsOrigin]="!alreadyOrigin && !alreadyDestination"
+                     [canSetAsDestination]="!alreadyOrigin && !alreadyDestination"
+                     [canAddAsWaypoint]="!alreadyWaypoint && !alreadyOrigin && !alreadyDestination"
+                     [canUnsetAsOrigin]="alreadyOrigin"
+                     [canUnsetAsDestination]="alreadyDestination"
+                     [canRemoveAsWaypoint]="alreadyWaypoint"
+                     (setAsOrigin)="displayRouteFrom(selected)"
+                     (setAsDestination)="displayRouteTo(selected)"
+                     (addedAsWaypoint)="addWaypoint(selected)"
+                     (unsetAsOrigin)="resetOrigin()"
+                     (unsetAsDestination)="resetDestination()"
+                     (removedAsWaypoint)="removeWaypoint(selected)"
+                     (centered)="centerMap(selected)">
+      </app-user-card>
     </div>
   </div>
 </div>
 
 <div class="waypoint">
-  <app-address-card *ngFor="let waypoint of waypoints" [address]="waypoint"
-                    [canSetAsOrigin]="true"
-                    [canSetAsDestination]="true"
-                    [canAddAsWaypoint]="false"
-                    [canUnsetAsOrigin]="false"
-                    [canUnsetAsDestination]="false"
-                    [canRemoveAsWaypoint]="true"
-                    (setAsOrigin)="displayRouteFrom(waypoint)"
-                    (setAsDestination)="displayRouteTo(waypoint)"
-                    (addedAsWaypoint)="addWaypoint(waypoint)"
-                    (unsetAsOrigin)="resetOrigin()"
-                    (unsetAsDestination)="resetDestination()"
-                    (removedAsWaypoint)="removeWaypoint(waypoint)"
-                    (centered)="centerMap(waypoint)">
-  </app-address-card>
+  <app-user-card *ngFor="let waypoint of waypoints" [address]="waypoint"
+                 [canSetAsOrigin]="true"
+                 [canSetAsDestination]="true"
+                 [canAddAsWaypoint]="false"
+                 [canUnsetAsOrigin]="false"
+                 [canUnsetAsDestination]="false"
+                 [canRemoveAsWaypoint]="true"
+                 (setAsOrigin)="displayRouteFrom(waypoint)"
+                 (setAsDestination)="displayRouteTo(waypoint)"
+                 (addedAsWaypoint)="addWaypoint(waypoint)"
+                 (unsetAsOrigin)="resetOrigin()"
+                 (unsetAsDestination)="resetDestination()"
+                 (removedAsWaypoint)="removeWaypoint(waypoint)"
+                 (centered)="centerMap(waypoint)">
+  </app-user-card>
 </div>
