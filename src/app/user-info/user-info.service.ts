@@ -18,6 +18,7 @@ export class UserInfoService {
       address: {
         lat: 47.2609413,
         lng: -1.635126,
+        title: 'Mon adresse',
         streetNumber: '22',
         streetName: 'rue d\'Altaïr',
         zip: '44700',

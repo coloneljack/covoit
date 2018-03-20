@@ -18,6 +18,13 @@
 
         <div class="form-field">
           <mat-form-field>
+            <input type="text" matInput placeholder="Poste" formControlName="job">
+            <mat-hint align="start">saisie libre</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div class="form-field">
+          <mat-form-field>
             <input type="text" matInput placeholder="E-mail" formControlName="email">
             <mat-error *ngIf="email.invalid" [appFieldMessage]="email"
                        [patternMessage]="'Format d\'e-mail incorrect.'"></mat-error>
@@ -32,42 +39,34 @@
                        [patternMessage]="'Format de numéro incorrect. Attendu : 4 chiffres (numéro interne) ou 10 chiffres commençant par un 0.'"></mat-error>
           </mat-form-field>
         </div>
-
-        <div class="form-field">
-          <mat-form-field>
-            <input type="text" matInput placeholder="Poste" formControlName="job">
-            <mat-hint align="start">saisie libre</mat-hint>
-          </mat-form-field>
-        </div>
       </div>
 
       <div class="form-row">
-        <div class="form-field">
-          <agm-map class="map" [latitude]="mapCenter.lat" [longitude]="mapCenter.lng" [zoom]="12"
-                   [mapTypeControl]="true"
-                   [mapTypeControlOptions]="{mapTypeIds: ['roadmap', 'hybrid', 'satellite', 'terrain']}">
-            <app-search-box [placeholder]="'Chercher une adresse...'" [position]="searchBoxPosition"
-                            (placesChange)="showSearchResults($event)">
-            </app-search-box>
+        <agm-map class="map" [latitude]="mapCenter.lat" [longitude]="mapCenter.lng" [zoom]="12"
+                 [mapTypeControl]="true"
+                 [mapTypeControlOptions]="{mapTypeIds: ['roadmap', 'hybrid', 'satellite', 'terrain']}">
+          <app-search-box [placeholder]="'Chercher une adresse...'" [position]="searchBoxPosition"
+                          (placesChange)="showSearchResults($event)">
+          </app-search-box>
 
-            <agm-marker *ngFor="let foundAddress of foundAddresses"
-                        [latitude]="foundAddress.lat" [longitude]="foundAddress.lng"
-                        [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'"
-                        (markerClick)="setAddress(foundAddress)">
-            </agm-marker>
+          <agm-marker *ngFor="let foundAddress of foundAddresses"
+                      [latitude]="foundAddress.lat" [longitude]="foundAddress.lng"
+                      [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'"
+                      (markerClick)="setAddress(foundAddress)">
+          </agm-marker>
 
-            <agm-marker *ngIf="address"
-                        [latitude]="address.lat" [longitude]="address.lng"
-                        [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/red-dot.png'">
-            </agm-marker>
-          </agm-map>
-        </div>
+          <agm-marker *ngIf="address"
+                      [latitude]="address.lat" [longitude]="address.lng"
+                      [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/red-dot.png'">
+          </agm-marker>
+        </agm-map>
+      </div>
+
+      <div class="form-row">
         <div class="form-field" *ngIf="address">
           <app-address-card [address]="address"></app-address-card>
         </div>
-      </div>
 
-      <div class="form-row">
         <div class="form-field">
           <mat-list class="radio-group">
             <label mat-subheader for="type">Type *</label>

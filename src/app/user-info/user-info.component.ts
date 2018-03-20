@@ -53,6 +53,7 @@ export class UserInfoComponent implements OnInit {
   ngOnInit() {
     this.userInfoService.getCurrentUserInfo().subscribe(u => {
       this.user = u;
+      this.address = u.address;
       this.mapCenter = u.address;
       this.initForm();
     });
