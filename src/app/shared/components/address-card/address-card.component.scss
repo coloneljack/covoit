@@ -19,13 +19,6 @@ mat-card {
       & > div:first-child {
         padding: 0 10px;
       }
-
-      & > div:last-child {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        flex-wrap: wrap;
-      }
     }
   }
 
@@ -38,8 +31,4 @@ mat-card {
       min-width: initial;
     }
   }
-}
-
-.brand-logo {
-  background: url('../../../../assets/images/brand-logo.jpg') no-repeat center;
 }

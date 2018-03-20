@@ -8,7 +8,8 @@
     <agm-map [latitude]="mapCenter.lat" [longitude]="mapCenter.lng" [zoom]="zoom"
              [mapTypeControl]="true"
              [mapTypeControlOptions]="{mapTypeIds: ['roadmap', 'hybrid', 'satellite', 'terrain']}">
-      <app-route [from]="routeOrigin" [to]="routeDestination" [waypoints]="waypoints" [keepMapZoomOnDisplay]="true">
+      <app-route [from]="routeOrigin" [to]="routeDestination" [waypoints]="routeWaypoints"
+                 [keepMapZoomOnDisplay]="true">
       </app-route>
 
       <agm-marker *ngIf="searchAddress"
@@ -23,13 +24,13 @@
                   (markerClick)="select(workLocation)">
       </agm-marker>
 
-      <agm-marker *ngFor="let coworkerAddress of coworkerAddresses"
-                  [latitude]="coworkerAddress.lat" [longitude]="coworkerAddress.lng"
+      <agm-marker *ngFor="let user of users"
+                  [latitude]="user.address.lat" [longitude]="user.address.lng"
                   [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/red-dot.png'"
-                  (markerClick)="select(coworkerAddress)">
+                  (markerClick)="select(user)">
       </agm-marker>
 
-      <agm-marker *ngFor="let address of otherAddresses; let i = index"
+      <agm-marker *ngFor="let address of otherAddresses"
                   [latitude]="address.lat" [longitude]="address.lng" [title]="address.title"
                   [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'"
                   (markerClick)="select(address)">
@@ -38,10 +39,10 @@
   </div>
 
   <div class="marker-details">
-    <div *ngIf="routeOrigin">
+    <div *ngIf="origin">
       <h3>Point de départ</h3>
-      <app-user-card [address]="routeOrigin"
-                     [highlighted]="routeOrigin === selected"
+      <app-user-card *ngIf="isUser(origin)" [user]="origin"
+                     [highlighted]="origin === selected"
                      [canSetAsOrigin]="false"
                      [canSetAsDestination]="false"
                      [canAddAsWaypoint]="false"
@@ -49,14 +50,25 @@
                      [canUnsetAsDestination]="false"
                      [canRemoveAsWaypoint]="false"
                      (unsetAsOrigin)="resetOrigin()"
-                     (centered)="centerMap(routeOrigin)">
+                     (centered)="centerMap(origin.address)">
       </app-user-card>
+      <app-address-card *ngIf="isAddress(origin)" [address]="origin"
+                        [highlighted]="origin === selected"
+                        [canSetAsOrigin]="false"
+                        [canSetAsDestination]="false"
+                        [canAddAsWaypoint]="false"
+                        [canUnsetAsOrigin]="true"
+                        [canUnsetAsDestination]="false"
+                        [canRemoveAsWaypoint]="false"
+                        (unsetAsOrigin)="resetOrigin()"
+                        (centered)="centerMap(origin)">
+      </app-address-card>
     </div>
 
-    <div *ngIf="routeDestination">
+    <div *ngIf="destination">
       <h3>Arrivée</h3>
-      <app-user-card [address]="routeDestination"
-                     [highlighted]="routeDestination === selected"
+      <app-user-card *ngIf="isUser(destination)" [user]="destination"
+                     [highlighted]="destination === selected"
                      [canSetAsOrigin]="false"
                      [canSetAsDestination]="false"
                      [canAddAsWaypoint]="false"
@@ -64,13 +76,24 @@
                      [canUnsetAsDestination]="true"
                      [canRemoveAsWaypoint]="false"
                      (unsetAsDestination)="resetDestination()"
-                     (centered)="centerMap(routeDestination)">
+                     (centered)="centerMap(destination.address)">
       </app-user-card>
+      <app-address-card *ngIf="isAddress(destination)" [address]="destination"
+                        [highlighted]="destination === selected"
+                        [canSetAsOrigin]="false"
+                        [canSetAsDestination]="false"
+                        [canAddAsWaypoint]="false"
+                        [canUnsetAsOrigin]="false"
+                        [canUnsetAsDestination]="true"
+                        [canRemoveAsWaypoint]="false"
+                        (unsetAsDestination)="resetDestination()"
+                        (centered)="centerMap(destination)">
+      </app-address-card>
     </div>
 
     <div *ngIf="selected">
       <h3>Sélection</h3>
-      <app-user-card [address]="selected"
+      <app-user-card *ngIf="isUser(selected)" [user]="selected"
                      [canSetAsOrigin]="!alreadyOrigin && !alreadyDestination"
                      [canSetAsDestination]="!alreadyOrigin && !alreadyDestination"
                      [canAddAsWaypoint]="!alreadyWaypoint && !alreadyOrigin && !alreadyDestination"
@@ -83,26 +106,58 @@
                      (unsetAsOrigin)="resetOrigin()"
                      (unsetAsDestination)="resetDestination()"
                      (removedAsWaypoint)="removeWaypoint(selected)"
-                     (centered)="centerMap(selected)">
+                     (centered)="centerMap(selected.address)">
       </app-user-card>
+      <app-address-card *ngIf="isAddress(selected)" [address]="selected"
+                        [canSetAsOrigin]="!alreadyOrigin && !alreadyDestination"
+                        [canSetAsDestination]="!alreadyOrigin && !alreadyDestination"
+                        [canAddAsWaypoint]="!alreadyWaypoint && !alreadyOrigin && !alreadyDestination"
+                        [canUnsetAsOrigin]="alreadyOrigin"
+                        [canUnsetAsDestination]="alreadyDestination"
+                        [canRemoveAsWaypoint]="alreadyWaypoint"
+                        (setAsOrigin)="displayRouteFrom(selected)"
+                        (setAsDestination)="displayRouteTo(selected)"
+                        (addedAsWaypoint)="addWaypoint(selected)"
+                        (unsetAsOrigin)="resetOrigin()"
+                        (unsetAsDestination)="resetDestination()"
+                        (removedAsWaypoint)="removeWaypoint(selected)"
+                        (centered)="centerMap(selected)">
+      </app-address-card>
     </div>
   </div>
 </div>
 
 <div class="waypoint">
-  <app-user-card *ngFor="let waypoint of waypoints" [address]="waypoint"
-                 [canSetAsOrigin]="true"
-                 [canSetAsDestination]="true"
-                 [canAddAsWaypoint]="false"
-                 [canUnsetAsOrigin]="false"
-                 [canUnsetAsDestination]="false"
-                 [canRemoveAsWaypoint]="true"
-                 (setAsOrigin)="displayRouteFrom(waypoint)"
-                 (setAsDestination)="displayRouteTo(waypoint)"
-                 (addedAsWaypoint)="addWaypoint(waypoint)"
-                 (unsetAsOrigin)="resetOrigin()"
-                 (unsetAsDestination)="resetDestination()"
-                 (removedAsWaypoint)="removeWaypoint(waypoint)"
-                 (centered)="centerMap(waypoint)">
-  </app-user-card>
+  <div *ngFor="let waypoint of waypoints">
+    <app-user-card *ngIf="isUser(waypoint)" [user]="waypoint"
+                   [canSetAsOrigin]="true"
+                   [canSetAsDestination]="true"
+                   [canAddAsWaypoint]="false"
+                   [canUnsetAsOrigin]="false"
+                   [canUnsetAsDestination]="false"
+                   [canRemoveAsWaypoint]="true"
+                   (setAsOrigin)="displayRouteFrom(waypoint)"
+                   (setAsDestination)="displayRouteTo(waypoint)"
+                   (addedAsWaypoint)="addWaypoint(waypoint)"
+                   (unsetAsOrigin)="resetOrigin()"
+                   (unsetAsDestination)="resetDestination()"
+                   (removedAsWaypoint)="removeWaypoint(waypoint)"
+                   (centered)="centerMap(waypoint.address)">
+    </app-user-card>
+    <app-address-card *ngIf="isAddress(waypoint)" [address]="waypoint"
+                      [canSetAsOrigin]="true"
+                      [canSetAsDestination]="true"
+                      [canAddAsWaypoint]="false"
+                      [canUnsetAsOrigin]="false"
+                      [canUnsetAsDestination]="false"
+                      [canRemoveAsWaypoint]="true"
+                      (setAsOrigin)="displayRouteFrom(waypoint)"
+                      (setAsDestination)="displayRouteTo(waypoint)"
+                      (addedAsWaypoint)="addWaypoint(waypoint)"
+                      (unsetAsOrigin)="resetOrigin()"
+                      (unsetAsDestination)="resetDestination()"
+                      (removedAsWaypoint)="removeWaypoint(waypoint)"
+                      (centered)="centerMap(waypoint)">
+    </app-address-card>
+  </div>
 </div>

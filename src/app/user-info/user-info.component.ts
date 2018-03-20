@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { Address } from '../shared/entities/address';
+import { User } from '../shared/entities/user';
 import { GmapsMapperService } from '../shared/services/gmaps-mapper.service';
 import { UserInfoService } from './user-info.service';
 import PlaceResult = google.maps.places.PlaceResult;
@@ -15,6 +16,7 @@ import PlaceResult = google.maps.places.PlaceResult;
 })
 export class UserInfoComponent implements OnInit {
 
+  user: User;
   address: Address;
   mapCenter: Address;
   userInfoForm: FormGroup;
@@ -49,9 +51,9 @@ export class UserInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userInfoService.getCurrentUserInfo().subscribe(a => {
-      this.address = a;
-      this.mapCenter = a;
+    this.userInfoService.getCurrentUserInfo().subscribe(u => {
+      this.user = u;
+      this.mapCenter = u.address;
       this.initForm();
     });
   }
@@ -60,7 +62,7 @@ export class UserInfoComponent implements OnInit {
     if (this.userInfoForm.valid) {
       const formValue = this.userInfoForm.value;
 
-      this.address.coworker = {
+      this.user = {
         firstName: formValue.firstName,
         lastName: formValue.lastName,
         email: formValue.email,
@@ -68,10 +70,11 @@ export class UserInfoComponent implements OnInit {
         job: formValue.job,
         type: formValue.type,
         seats: formValue.seats,
-        workingHours: formValue.workingHours
+        workingHours: formValue.workingHours,
+        address: this.address
       };
 
-      this.userInfoService.saveUserInfo(this.address).subscribe((status: string) => {
+      this.userInfoService.saveUserInfo(this.user).subscribe((status: string) => {
         if (status === 'OK') {
           this.snackbar.open('Les informations de l\'utilisateur ont bien été enregistrées.', '', {
             duration: 5000
@@ -107,14 +110,14 @@ export class UserInfoComponent implements OnInit {
 
   private initForm() {
     this.userInfoForm = this.fb.group({
-      firstName: [this.address.coworker.firstName || '', Validators.required],
-      lastName: [this.address.coworker.lastName || '', Validators.required],
-      tel: [this.address.coworker.tel || '', [Validators.pattern(/^((\d{4})|(0\d{9}))$/), Validators.minLength(4)]],
-      job: this.address.coworker.job || '',
-      email: [this.address.coworker.email || '', Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)],
-      type: [this.address.coworker.type || 'CP', Validators.required],
-      seats: [this.address.coworker.seats || 4, [Validators.required, Validators.min(0), Validators.max(9)]],
-      workingHours: this.address.coworker.workingHours || ''
+      firstName: [this.user.firstName || '', Validators.required],
+      lastName: [this.user.lastName || '', Validators.required],
+      tel: [this.user.tel || '', [Validators.pattern(/^((\d{4})|(0\d{9}))$/), Validators.minLength(4)]],
+      job: this.user.job || '',
+      email: [this.user.email || '', Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)],
+      type: [this.user.type || 'CP', Validators.required],
+      seats: [this.user.seats || 4, [Validators.required, Validators.min(0), Validators.max(9)]],
+      workingHours: this.user.workingHours || ''
     });
   }
 }

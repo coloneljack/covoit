@@ -10,10 +10,10 @@ declare const google: any;
 })
 export class RouteDirective implements OnInit, OnChanges, DoCheck {
 
-  @Input() public from: Address;
-  @Input() public to: Address;
-  @Input() public waypoints?: Array<Address>;
-  @Input() public keepMapZoomOnDisplay = false;
+  @Input() from: Address;
+  @Input() to: Address;
+  @Input() waypoints?: Array<Address>;
+  @Input() keepMapZoomOnDisplay = false;
   private directionsDisplay: any;
   private directionsService: any;
   private iterableDiffer: IterableDiffer<any>;
@@ -39,7 +39,7 @@ export class RouteDirective implements OnInit, OnChanges, DoCheck {
   public ngOnChanges(changes: SimpleChanges): void {
     this.displayRoute();
   }
-
+  
   public ngDoCheck(): void {
     const changes = this.iterableDiffer.diff(this.waypoints);
     if (changes) {

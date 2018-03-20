@@ -1,4 +1,6 @@
-export interface Coworker {
+import { Address } from './address';
+
+export interface User {
   firstName: string;
   lastName: string;
   tel?: string;
@@ -7,4 +9,5 @@ export interface Coworker {
   type?: string;
   seats?: number;
   workingHours?: string;
+  address?: Address;
 }

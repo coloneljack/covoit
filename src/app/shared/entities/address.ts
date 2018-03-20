@@ -1,5 +1,3 @@
-import { Coworker } from './coworker';
-
 export interface Address {
   lat: number;
   lng: number;
@@ -9,5 +7,4 @@ export interface Address {
   zip?: string;
   city?: string;
   country?: string;
-  coworker?: Coworker;
 }

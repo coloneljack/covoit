@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Coworker } from './shared/entities/coworker';
+import { User } from './shared/entities/user';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +8,7 @@ import { Coworker } from './shared/entities/coworker';
 })
 export class AppComponent implements OnInit {
 
-  public user: Coworker;
+  public user: User;
 
   constructor() {}
 

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { Coworker } from '../shared/entities/coworker';
+import { User } from '../shared/entities/user';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +13,7 @@ export class HeaderComponent implements OnInit {
   public showMenuButton = true;
 
   @Input()
-  public user: Coworker;
+  public user: User;
 
   @Output()
   public menuButtonClicked = new EventEmitter<void>();

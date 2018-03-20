@@ -1,33 +1,14 @@
 <mat-card [ngClass]="{'highlighted': highlighted}">
-  <mat-card-header>
-    <div mat-card-avatar class="brand-logo"></div>
-    <mat-card-title>{{user.firstName}}&nbsp;{{user.lastName}}</mat-card-title>
-    <mat-card-subtitle>{{user.job}}</mat-card-subtitle>
-  </mat-card-header>
   <mat-card-content>
-    <div *ngIf="user.address.streetNumber || user.address.streetName || user.address.zip || user.address.city">
+    <div *ngIf="address.streetNumber || address.streetName || address.zip || address.city">
       <div>
         <mat-icon>map</mat-icon>
       </div>
       <div>
-        <span *ngIf="user.address.streetNumber">{{user.address.streetNumber}}&nbsp;</span>
-        <span *ngIf="user.address.streetName">{{user.address.streetName}},&nbsp;</span>
-        <span *ngIf="user.address.zip">{{user.address.zip}}&nbsp;</span>
-        <span *ngIf="user.address.city">{{user.address.city}}</span>
-      </div>
-    </div>
-    <div *ngIf="user.tel">
-      <div>
-        <mat-icon>phone</mat-icon>
-      </div>
-      <div>{{user.tel}}</div>
-    </div>
-    <div *ngIf="user.email">
-      <div>
-        <mat-icon>email</mat-icon>
-      </div>
-      <div>
-        <a [href]="'mailto:' + user.email">{{user.email}}</a>
+        <span *ngIf="address.streetNumber">{{address.streetNumber}}&nbsp;</span>
+        <span *ngIf="address.streetName">{{address.streetName}},&nbsp;</span>
+        <span *ngIf="address.zip">{{address.zip}}&nbsp;</span>
+        <span *ngIf="address.city">{{address.city}}</span>
       </div>
     </div>
   </mat-card-content>

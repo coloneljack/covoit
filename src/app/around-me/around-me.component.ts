@@ -3,6 +3,7 @@ import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core'
 import { FormBuilder, FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Address } from '../shared/entities/address';
+import { User } from '../shared/entities/user';
 import { GmapsMapperService } from '../shared/services/gmaps-mapper.service';
 import { AroundMeService } from './around-me.service';
 
@@ -13,27 +14,40 @@ import { AroundMeService } from './around-me.service';
 })
 export class AroundMeComponent implements OnInit {
 
-  @ViewChild('search')
-  public searchElementRef: ElementRef;
+  @ViewChild('search') searchElementRef: ElementRef;
 
-  public title = 'Covoit\' OAB';
-  public searchAddress: Address;
-  public workLocation: Address;
-  public routeDestination: Address;
-  public mapCenter: Address;
-  public routeOrigin: Address;
-  public coworkerAddresses: Array<Address> = [];
-  public selected: Address;
-  public otherAddresses: Array<Address> = [];
-  public waypoints: Array<Address> = [];
-  public alreadyOrigin = false;
-  public alreadyDestination = false;
-  public alreadyWaypoint = false;
-  public searchControl: FormControl;
-  public zoom = 12;
+  searchAddress: Address;
+  workLocation: Address;
+  destination: User | Address;
+  mapCenter: Address;
+  origin: User | Address;
+  users: Array<User> = [];
+  selected: User | Address;
+  otherAddresses: Array<Address> = [];
+  waypoints: Array<User | Address> = [];
+  alreadyOrigin = false;
+  alreadyDestination = false;
+  alreadyWaypoint = false;
+  searchControl: FormControl;
+  zoom = 12;
+  routeOrigin: Address;
+  routeDestination: Address;
+  routeWaypoints: Array<Address> = [];
 
   constructor(private gMapsMapperService: GmapsMapperService, private aroundMeService: AroundMeService, private mapsAPILoader: MapsAPILoader,
               private ngZone: NgZone, private snackBar: MatSnackBar, private fb: FormBuilder) {
+  }
+
+  setRouteOrigin(): void {
+    this.routeOrigin = this.getAddress(this.origin);
+  }
+
+  setRouteDestination(): void {
+    this.routeDestination = this.getAddress(this.destination);
+  }
+
+  setRouteWaypoints(): void {
+    this.routeWaypoints = this.waypoints.map(this.getAddress.bind(this));
   }
 
   ngOnInit(): void {
@@ -41,62 +55,87 @@ export class AroundMeComponent implements OnInit {
     this.loadSearchAutocomplete();
     this.aroundMeService.getWorkLocation().subscribe((wl: Address) => {
       this.mapCenter = wl;
-      this.routeDestination = wl;
+      this.destination = wl;
+      this.setRouteDestination();
       this.workLocation = wl;
     });
-    this.aroundMeService.getAllCoworkerAddresses().subscribe((coworkerAddresses: Array<Address>) => this.coworkerAddresses = coworkerAddresses);
+    this.aroundMeService.getAllUsers().subscribe((coworkerAddresses: Array<User>) => this.users = coworkerAddresses);
+  }
+
+  isUser(a: any): a is User {
+    const user = <User> a;
+    return user.firstName !== undefined && user.lastName !== undefined;
+  }
+
+  isAddress(a: any): a is Address {
+    const address = <Address> a;
+    return address.lat !== undefined && address.lng !== undefined;
   }
 
   centerMap(center: Address): void {
     this.mapCenter = center;
   }
 
-  select(address: Address): void {
-    this.selected = address;
-    this.selectAddress(address);
+  select(poi: User | Address): void {
+    this.selected = poi;
+    this.alreadyOrigin = (this.origin === poi);
+    this.alreadyDestination = (this.destination === poi);
+    this.alreadyWaypoint = (this.waypoints.indexOf(poi) !== -1);
   }
 
-  displayRouteFrom(address: Address): void {
-    this.routeOrigin = address;
-    this.removeWaypoint(address);
+  displayRouteFrom(poi: User | Address): void {
+    this.origin = poi;
+    this.setRouteOrigin();
+    this.removeWaypoint(poi);
     this.alreadyOrigin = true;
-    this.addMarker(address);
+    this.addMarker(poi);
   }
 
-  displayRouteTo(address: Address): void {
-    this.routeDestination = address;
-    this.removeWaypoint(address);
+  displayRouteTo(poi: User | Address): void {
+    this.destination = poi;
+    this.setRouteDestination();
+    this.removeWaypoint(poi);
     this.alreadyDestination = true;
-    this.addMarker(address);
+    this.addMarker(poi);
   }
 
-  addWaypoint(address: Address): void {
-    this.waypoints.push(address);
+  addWaypoint(poi: User | Address): void {
+    this.waypoints.push(poi);
+    this.setRouteWaypoints();
     this.alreadyWaypoint = true;
-    this.addMarker(address);
+    this.addMarker(poi);
   }
 
   resetOrigin(): void {
-    this.routeOrigin = null;
+    this.origin = null;
     this.alreadyOrigin = false;
   }
 
   resetDestination(): void {
-    this.routeDestination = null;
+    this.destination = null;
     this.alreadyDestination = false;
   }
 
-  removeWaypoint(address: Address) {
-    const idx = this.waypoints.indexOf(address);
+  removeWaypoint(poi: User | Address) {
+    const idx = this.waypoints.indexOf(poi);
     if (idx !== -1) {
       this.waypoints.splice(idx, 1);
     }
+    this.setRouteWaypoints();
     this.alreadyWaypoint = false;
   }
 
-  private addMarker(address: Address): void {
-    if (this.coworkerAddresses.indexOf(address) === -1 && this.otherAddresses.indexOf(address) === -1 && this.workLocation !== address) {
-      this.otherAddresses.push(address);
+  private getAddress(poi: User | Address): Address {
+    if (!poi) {
+      return null;
+    }
+    return this.isUser(poi) ? poi.address : poi;
+  }
+
+  private addMarker(poi: User | Address): void {
+    // Users already have their existing marker on the map
+    if (this.isAddress(poi) && this.otherAddresses.indexOf(poi) === -1 && this.workLocation !== poi) {
+      this.otherAddresses.push(poi);
     }
   }
 
@@ -122,12 +161,6 @@ export class AroundMeComponent implements OnInit {
         });
       });
     });
-  }
-
-  private selectAddress(address: Address): void {
-    this.alreadyOrigin = (this.routeOrigin === address);
-    this.alreadyDestination = (this.routeDestination === address);
-    this.alreadyWaypoint = (this.waypoints.indexOf(address) !== -1);
   }
 
 }

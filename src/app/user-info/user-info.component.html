@@ -62,8 +62,8 @@
             </agm-marker>
           </agm-map>
         </div>
-        <div class="form-field">
-          <app-user-card *ngIf="address" [address]="address"></app-user-card>
+        <div class="form-field" *ngIf="address">
+          <app-address-card [address]="address"></app-address-card>
         </div>
       </div>
 

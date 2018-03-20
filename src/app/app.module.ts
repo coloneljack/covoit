@@ -29,6 +29,8 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { UserInfoService } from './user-info/user-info.service';
 import { SearchBoxComponent } from './shared/components/search-box/search-box.component';
+import { AddressCardComponent } from './shared/components/address-card/address-card.component';
+import { AddressActionsComponent } from './shared/components/address-actions/address-actions.component';
 
 
 @NgModule({
@@ -44,7 +46,9 @@ import { SearchBoxComponent } from './shared/components/search-box/search-box.co
     SidebarComponent,
     HeaderComponent,
     HomeComponent,
-    SearchBoxComponent
+    SearchBoxComponent,
+    AddressCardComponent,
+    AddressActionsComponent
   ],
   imports: [
     BrowserModule,
