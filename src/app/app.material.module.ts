@@ -88,6 +88,7 @@ import {
     MatCardModule,
     MatFormFieldModule,
     MatSnackBarModule,
+    MatTooltipModule,
     MatMenuModule,
     MatChipsModule,
     MatTooltipModule

@@ -5,6 +5,10 @@ mat-card {
     border: darkorange 4px outset;
   }
 
+  mat-card-header mat-icon {
+    font-size: 24px;
+  }
+
   mat-card-content {
     display: flex;
     flex-direction: column;

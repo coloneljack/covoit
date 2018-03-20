@@ -1,11 +1,13 @@
 import { MapsAPILoader } from '@agm/core';
-import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { ControlPosition } from '@agm/core/services/google-maps-types';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Address } from '../shared/entities/address';
 import { User } from '../shared/entities/user';
 import { GmapsMapperService } from '../shared/services/gmaps-mapper.service';
 import { AroundMeService } from './around-me.service';
+import PlaceResult = google.maps.places.PlaceResult;
 
 @Component({
   selector: 'app-around-me',
@@ -14,29 +16,25 @@ import { AroundMeService } from './around-me.service';
 })
 export class AroundMeComponent implements OnInit {
 
-  @ViewChild('search') searchElementRef: ElementRef;
-
-  searchAddress: Address;
+  searchBoxPosition: ControlPosition = ControlPosition.TOP_CENTER;
   workLocation: Address;
   destination: User | Address;
   mapCenter: Address;
   origin: User | Address;
   users: Array<User> = [];
   selected: User | Address;
+  foundAddresses: Array<Address> = [];
   otherAddresses: Array<Address> = [];
   waypoints: Array<User | Address> = [];
   alreadyOrigin = false;
   alreadyDestination = false;
   alreadyWaypoint = false;
-  searchControl: FormControl;
   zoom = 12;
   routeOrigin: Address;
   routeDestination: Address;
   routeWaypoints: Array<Address> = [];
 
-  constructor(private gMapsMapperService: GmapsMapperService, private aroundMeService: AroundMeService, private mapsAPILoader: MapsAPILoader,
-              private ngZone: NgZone, private snackBar: MatSnackBar, private fb: FormBuilder) {
-  }
+  constructor(private gMapsMapperService: GmapsMapperService, private aroundMeService: AroundMeService) {}
 
   setRouteOrigin(): void {
     this.routeOrigin = this.getAddress(this.origin);
@@ -51,8 +49,6 @@ export class AroundMeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.searchControl = this.fb.control('');
-    this.loadSearchAutocomplete();
     this.aroundMeService.getWorkLocation().subscribe((wl: Address) => {
       this.mapCenter = wl;
       this.destination = wl;
@@ -125,6 +121,10 @@ export class AroundMeComponent implements OnInit {
     this.alreadyWaypoint = false;
   }
 
+  showSearchResults(foundPlaces: Array<PlaceResult>): void {
+    this.foundAddresses = foundPlaces ? foundPlaces.map(this.gMapsMapperService.toAddress) : [];
+  }
+
   private getAddress(poi: User | Address): Address {
     if (!poi) {
       return null;
@@ -137,30 +137,6 @@ export class AroundMeComponent implements OnInit {
     if (this.isAddress(poi) && this.otherAddresses.indexOf(poi) === -1 && this.workLocation !== poi) {
       this.otherAddresses.push(poi);
     }
-  }
-
-  private loadSearchAutocomplete(): void {
-    this.mapsAPILoader.load().then(() => {
-      const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        componentRestrictions: {
-          country: 'fr'
-        }
-      });
-
-      autocomplete.addListener('place_changed', () => {
-        this.ngZone.run(() => {
-          const place: google.maps.places.PlaceResult = autocomplete.getPlace();
-          const addressFound = this.gMapsMapperService.toAddress(place);
-
-          if (addressFound) {
-            // set address and map center
-            this.searchAddress = addressFound;
-            this.mapCenter = addressFound;
-            this.selected = addressFound;
-          }
-        });
-      });
-    });
   }
 
 }

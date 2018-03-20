@@ -1,4 +1,11 @@
 <mat-card [ngClass]="{'highlighted': highlighted}">
+  <mat-card-header>
+    <div mat-card-avatar>
+      <mat-icon color="primary">place</mat-icon>
+    </div>
+    <mat-card-title>{{address.title}}</mat-card-title>
+    <mat-card-subtitle>Lieu</mat-card-subtitle>
+  </mat-card-header>
   <mat-card-content>
     <div *ngIf="address.streetNumber || address.streetName || address.zip || address.city">
       <div>

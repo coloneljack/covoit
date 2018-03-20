@@ -1,21 +1,21 @@
 <div class="map-container">
   <div class="map">
-    <mat-form-field>
-      <input matInput id="address" type="text" placeholder="Rechercher une adresse..."
-             #search [formControl]="searchControl">
-    </mat-form-field>
-
     <agm-map [latitude]="mapCenter.lat" [longitude]="mapCenter.lng" [zoom]="zoom"
              [mapTypeControl]="true"
              [mapTypeControlOptions]="{mapTypeIds: ['roadmap', 'hybrid', 'satellite', 'terrain']}">
+      <app-search-box [placeholder]="'Chercher une adresse...'" [position]="searchBoxPosition"
+                      [autoBoundResults]="false"
+                      (placesChange)="showSearchResults($event)">
+      </app-search-box>
+
       <app-route [from]="routeOrigin" [to]="routeDestination" [waypoints]="routeWaypoints"
                  [keepMapZoomOnDisplay]="true">
       </app-route>
 
-      <agm-marker *ngIf="searchAddress"
-                  [latitude]="searchAddress.lat" [longitude]="searchAddress.lng"
+      <agm-marker *ngFor="let foundAddress of foundAddresses"
+                  [latitude]="foundAddress.lat" [longitude]="foundAddress.lng"
                   [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'"
-                  (markerClick)="select(searchAddress)">
+                  (markerClick)="select(foundAddress)">
       </agm-marker>
 
       <agm-marker *ngIf="workLocation"
