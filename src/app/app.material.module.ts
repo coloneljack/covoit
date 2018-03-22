@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import {
   MAT_DATE_LOCALE,
-  MAT_LABEL_GLOBAL_OPTIONS,
   MatAutocompleteModule,
   MatButtonModule,
   MatCardModule,
@@ -11,7 +10,6 @@ import {
   MatDialogModule,
   MatExpansionModule,
   MatFormFieldModule,
-  MatGridListModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
@@ -19,7 +17,8 @@ import {
   MatNativeDateModule,
   MatPaginatorModule,
   MatRadioModule,
-  MatSelectModule, MatSidenavModule,
+  MatSelectModule,
+  MatSidenavModule,
   MatSlideToggleModule,
   MatSnackBarModule,
   MatSortModule,
@@ -29,6 +28,8 @@ import {
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
+import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
+import { MatMomentDatetimeModule } from '@mat-datetimepicker/moment';
 
 @NgModule({
   imports: [
@@ -43,7 +44,6 @@ import {
     MatNativeDateModule,
     MatDatepickerModule,
     MatListModule,
-    MatGridListModule,
     MatIconModule,
     MatTableModule,
     MatPaginatorModule,
@@ -58,7 +58,9 @@ import {
     MatSnackBarModule,
     MatMenuModule,
     MatChipsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatMomentDatetimeModule,
+    MatDatetimepickerModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'}
@@ -75,7 +77,6 @@ import {
     MatNativeDateModule,
     MatDatepickerModule,
     MatListModule,
-    MatGridListModule,
     MatIconModule,
     MatTableModule,
     MatPaginatorModule,
@@ -91,7 +92,8 @@ import {
     MatTooltipModule,
     MatMenuModule,
     MatChipsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDatetimepickerModule
   ]
 })
 export class AppMaterialModule {

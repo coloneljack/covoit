@@ -80,19 +80,36 @@
 
         <div class="form-field" *ngIf="isDriver()">
           <mat-form-field>
-            <input type="number" matInput placeholder="Places disponibles" formControlName="seats" min="0" max="9">
+            <input type="number" matInput placeholder="Préciser le nombre de places disponibles" formControlName="seats"
+                   min="0" max="9">
             <mat-error *ngIf="seats.invalid" [appFieldMessage]="seats"></mat-error>
           </mat-form-field>
         </div>
+      </div>
 
-        <div class="form-field">
-          <mat-form-field>
-            <textarea matInput placeholder="Horaires/disponibilités semaine" matTextareaAutosize
-                      maxlength="255" #precDispo formControlName="workingHours">
-            </textarea>
-            <mat-hint align="start">Préciser les horaires et jours de travail si non standard (saisie libre)</mat-hint>
-            <mat-hint align="end">{{precDispo.value.length}} / 255</mat-hint>
-          </mat-form-field>
+      <div class="form-row">
+        <div class="form-field" formGroupName="workingWeek">
+          <mat-list class="working-week">
+            <mat-list-item>
+              <app-working-day #monday [day]="'Lundi'"></app-working-day>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <app-working-day #tuesday [day]="'Mardi'"></app-working-day>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <app-working-day #wednesday [day]="'Mercredi'"></app-working-day>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <app-working-day #thursday [day]="'Jeudi'"></app-working-day>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <app-working-day #friday [day]="'Vendredi'"></app-working-day>
+            </mat-list-item>
+          </mat-list>
         </div>
       </div>
     </div>

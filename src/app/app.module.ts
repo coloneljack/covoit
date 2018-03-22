@@ -31,6 +31,7 @@ import { UserInfoService } from './user-info/user-info.service';
 import { SearchBoxComponent } from './shared/components/search-box/search-box.component';
 import { AddressCardComponent } from './shared/components/address-card/address-card.component';
 import { AddressActionsComponent } from './shared/components/address-actions/address-actions.component';
+import { WorkingDayComponent } from './user-info/working-day/working-day.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { AddressActionsComponent } from './shared/components/address-actions/add
     HomeComponent,
     SearchBoxComponent,
     AddressCardComponent,
-    AddressActionsComponent
+    AddressActionsComponent,
+    WorkingDayComponent
   ],
   imports: [
     BrowserModule,

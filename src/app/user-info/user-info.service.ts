@@ -28,9 +28,9 @@ export class UserInfoService {
     });
   }
 
-  public saveUserInfo(address: User): Observable<string> {
+  public saveUserInfo(user: User): Observable<string> {
     console.log('--> UserInfoService::saveUserAddress');
-    console.log(address);
+    console.log(user);
     console.log('<-- UserInfoService::saveUserAddress');
     return Observable.of('OK');
   }

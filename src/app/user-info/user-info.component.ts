@@ -1,12 +1,14 @@
 import { ControlPosition } from '@agm/core/services/google-maps-types';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { Address } from '../shared/entities/address';
 import { User } from '../shared/entities/user';
+import { WorkingDay } from '../shared/entities/working-hours';
 import { GmapsMapperService } from '../shared/services/gmaps-mapper.service';
 import { UserInfoService } from './user-info.service';
+import { WorkingDayComponent } from './working-day/working-day.component';
 import PlaceResult = google.maps.places.PlaceResult;
 
 @Component({
@@ -14,7 +16,14 @@ import PlaceResult = google.maps.places.PlaceResult;
   templateUrl: './user-info.component.html',
   styleUrls: ['./user-info.component.scss']
 })
-export class UserInfoComponent implements OnInit {
+export class UserInfoComponent implements OnInit, AfterViewInit {
+
+  @ViewChild('monday') monday: WorkingDayComponent;
+  @ViewChild('tuesday') tuesday: WorkingDayComponent;
+  @ViewChild('wednesday') wednesday: WorkingDayComponent;
+  @ViewChild('thursday') thursday: WorkingDayComponent;
+  @ViewChild('friday') friday: WorkingDayComponent;
+
 
   user: User;
   address: Address;
@@ -50,6 +59,10 @@ export class UserInfoComponent implements OnInit {
     return this.userInfoForm.get('seats') as FormControl;
   }
 
+  get workingWeek(): FormGroup {
+    return this.userInfoForm.get('workingWeek') as FormGroup;
+  }
+
   ngOnInit() {
     this.userInfoService.getCurrentUserInfo().subscribe(u => {
       this.user = u;
@@ -57,6 +70,14 @@ export class UserInfoComponent implements OnInit {
       this.mapCenter = u.address;
       this.initForm();
     });
+  }
+
+  ngAfterViewInit() {
+    this.addChildGroup('monday', this.monday);
+    this.addChildGroup('tuesday', this.tuesday);
+    this.addChildGroup('wednesday', this.wednesday);
+    this.addChildGroup('thursday', this.thursday);
+    this.addChildGroup('friday', this.friday);
   }
 
   save(): void {
@@ -71,7 +92,13 @@ export class UserInfoComponent implements OnInit {
         job: formValue.job,
         type: formValue.type,
         seats: formValue.seats,
-        workingHours: formValue.workingHours,
+        workingWeek: {
+          monday: this.getWorkingDay(formValue.workingWeek.monday),
+          tuesday: this.getWorkingDay(formValue.workingWeek.tuesday),
+          wednesday: this.getWorkingDay(formValue.workingWeek.wednesday),
+          thursday: this.getWorkingDay(formValue.workingWeek.thursday),
+          friday: this.getWorkingDay(formValue.workingWeek.friday)
+        },
         address: this.address
       };
 
@@ -109,6 +136,22 @@ export class UserInfoComponent implements OnInit {
     this.mapCenter = address;
   }
 
+
+  // FIXME : remove any type + format Moment value
+  private getWorkingDay(dayFormValue: any): WorkingDay {
+    return {
+      amStart: dayFormValue.amStart,
+      amEnd: dayFormValue.amEnd,
+      pmStart: dayFormValue.pmStart,
+      pmEnd: dayFormValue.pmEnd
+    };
+  }
+
+  private addChildGroup(groupName: string, childView: WorkingDayComponent): void {
+    this.workingWeek.addControl(groupName, childView.workingDayForm);
+    childView.workingDayForm.setParent(this.workingWeek);
+  }
+
   private initForm() {
     this.userInfoForm = this.fb.group({
       firstName: [this.user.firstName || '', Validators.required],
@@ -118,7 +161,7 @@ export class UserInfoComponent implements OnInit {
       email: [this.user.email || '', Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)],
       type: [this.user.type || 'CP', Validators.required],
       seats: [this.user.seats || 4, [Validators.required, Validators.min(0), Validators.max(9)]],
-      workingHours: this.user.workingHours || ''
+      workingWeek: this.fb.group({})
     });
   }
 }

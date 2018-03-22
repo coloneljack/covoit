@@ -3,6 +3,7 @@
 @import 'variables';
 // @see https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
+@import '~@mat-datetimepicker/core/datetimepicker/datetimepicker-theme.scss';
 
 // Custom colour palettes
 // @note Used Material Color Tool
@@ -51,3 +52,5 @@ $covoit-app-accent: mat-palette($covoit-accent, 500, 300, 700);
 $covoit-app-warn: mat-palette($covoit-warn);
 $covoit-app-theme: mat-light-theme($covoit-app-primary, $covoit-app-accent, $covoit-app-warn);
 @include angular-material-theme($covoit-app-theme);
+
+@include mat-datetimepicker-theme($covoit-app-theme);

@@ -151,6 +151,12 @@
   dependencies:
     tslib "^1.7.1"
 
+"@angular/material-moment-adapter@^5.2.4":
+  version "5.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/material-moment-adapter/-/material-moment-adapter-5.2.4.tgz#b6e4789986cb421489672777fa7af0128e77436f"
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/material@^5.2.1":
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/@angular/material/-/material-5.2.1.tgz#c0433edf98904dc35ae15dfa93ede755418843dd"
@@ -174,6 +180,14 @@
   resolved "https://registry.yarnpkg.com/@angular/router/-/router-5.2.5.tgz#f8f220d5fb85fc10d60fe606b0f2a64732265142"
   dependencies:
     tslib "^1.7.1"
+
+"@mat-datetimepicker/core@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@mat-datetimepicker/core/-/core-1.0.2.tgz#6b002ad1819e6284e50c8df5bb0e6e51cd6d5b3d"
+
+"@mat-datetimepicker/moment@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@mat-datetimepicker/moment/-/moment-1.0.2.tgz#51b81a4fd0cd118865952b663e2b0ec20da27817"
 
 "@ngtools/json-schema@1.2.0":
   version "1.2.0"
@@ -3746,6 +3760,10 @@ mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
+
+moment@^2.21.0:
+  version "2.21.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.21.0.tgz#2a114b51d2a6ec9e6d83cf803f838a878d8a023a"
 
 move-concurrently@^1.0.1:
   version "1.0.1"

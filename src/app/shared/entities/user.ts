@@ -1,4 +1,5 @@
 import { Address } from './address';
+import { WorkingWeek } from './working-hours';
 
 export interface User {
   firstName: string;
@@ -8,6 +9,6 @@ export interface User {
   job?: string;
   type?: string;
   seats?: number;
-  workingHours?: string;
+  workingWeek?: WorkingWeek;
   address?: Address;
 }
