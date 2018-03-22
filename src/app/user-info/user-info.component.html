@@ -88,26 +88,27 @@
       </div>
 
       <div class="form-row">
-        <div class="form-field" formGroupName="workingWeek">
+        <div class="form-field">
           <mat-list class="working-week">
             <mat-list-item>
-              <app-working-day #monday [day]="'Lundi'"></app-working-day>
+              <app-working-day #monday [day]="'Lundi'" [workingDay]="user.workingWeek?.monday"></app-working-day>
             </mat-list-item>
             <mat-divider></mat-divider>
             <mat-list-item>
-              <app-working-day #tuesday [day]="'Mardi'"></app-working-day>
+              <app-working-day #tuesday [day]="'Mardi'" [workingDay]="user.workingWeek?.tuesday"></app-working-day>
             </mat-list-item>
             <mat-divider></mat-divider>
             <mat-list-item>
-              <app-working-day #wednesday [day]="'Mercredi'"></app-working-day>
+              <app-working-day #wednesday [day]="'Mercredi'" [workingDay]="user.workingWeek?.wednesday">
+              </app-working-day>
             </mat-list-item>
             <mat-divider></mat-divider>
             <mat-list-item>
-              <app-working-day #thursday [day]="'Jeudi'"></app-working-day>
+              <app-working-day #thursday [day]="'Jeudi'" [workingDay]="user.workingWeek?.thursday"></app-working-day>
             </mat-list-item>
             <mat-divider></mat-divider>
             <mat-list-item>
-              <app-working-day #friday [day]="'Vendredi'"></app-working-day>
+              <app-working-day #friday [day]="'Vendredi'" [workingDay]="user.workingWeek?.friday"></app-working-day>
             </mat-list-item>
           </mat-list>
         </div>

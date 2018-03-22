@@ -1,16 +1,15 @@
 <div class="working-day" [formGroup]="workingDayForm">
   <span class="day-name">{{day}}</span>
-  <span>
+  <span [hidden]="idle">
     <mat-form-field class="time-picker" #amStart>
       <mat-placeholder>Début (AM)</mat-placeholder>
       <mat-datetimepicker-toggle [for]="amStartPicker" matSuffix></mat-datetimepicker-toggle>
       <mat-datetimepicker #amStartPicker type="time" openOnFocus="true" timeInterval="15" mode="'portrait'">
       </mat-datetimepicker>
-      <input type="text" matInput formControlName="amStart" [matDatetimepicker]="amStartPicker"
-             autocomplete="false">
+      <input type="text" matInput formControlName="amStart" [matDatetimepicker]="amStartPicker" autocomplete="false">
     </mat-form-field>
   </span>
-  <span>
+  <span [hidden]="idle">
     <mat-form-field class="time-picker" #amEnd>
       <mat-placeholder>Fin (AM)</mat-placeholder>
       <mat-datetimepicker-toggle [for]="amEndPicker" matSuffix></mat-datetimepicker-toggle>
@@ -19,7 +18,7 @@
       <input type="text" matInput formControlName="amEnd" [matDatetimepicker]="amEndPicker" autocomplete="false">
     </mat-form-field>
   </span>
-  <span>
+  <span [hidden]="idle">
     <mat-form-field class="time-picker" #pmStart>
       <mat-placeholder>Début (PM)</mat-placeholder>
       <mat-datetimepicker-toggle [for]="pmStartPicker" matSuffix></mat-datetimepicker-toggle>
@@ -28,7 +27,7 @@
       <input type="text" matInput formControlName="pmStart" [matDatetimepicker]="pmStartPicker" autocomplete="false">
     </mat-form-field>
   </span>
-  <span>
+  <span [hidden]="idle">
     <mat-form-field class="time-picker" #pmEnd>
       <mat-placeholder>Fin (PM)</mat-placeholder>
       <mat-datetimepicker-toggle [for]="pmEndPicker" matSuffix></mat-datetimepicker-toggle>
@@ -36,5 +35,8 @@
       </mat-datetimepicker>
       <input type="text" matInput formControlName="pmEnd" [matDatetimepicker]="pmEndPicker" autocomplete="false">
     </mat-form-field>
+  </span>
+  <span>
+    <mat-checkbox [align]="'start'" formControlName="idle">Jour non travaillé</mat-checkbox>
   </span>
 </div>

@@ -24,6 +24,13 @@ export class UserInfoService {
         zip: '44700',
         city: 'Orvault',
         country: 'France'
+      },
+      workingWeek: {
+        monday: {idle: false, amStart: '09:00', amEnd: '12:15', pmStart: '13:45', pmEnd: '18:00'},
+        tuesday: {idle: false, amStart: '09:00', amEnd: '12:00', pmStart: '13:30', pmEnd: '18:30'},
+        wednesday: {idle: true},
+        thursday: {idle: false, amStart: '09:00', amEnd: '12:30', pmStart: '14:00', pmEnd: '17:45'},
+        friday: {idle: false, amStart: '10:00', amEnd: '12:15', pmStart: '13:45', pmEnd: '17:30'}
       }
     });
   }

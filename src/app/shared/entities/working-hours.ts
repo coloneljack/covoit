@@ -7,8 +7,9 @@ export interface WorkingWeek {
 }
 
 export interface WorkingDay {
-  amStart: string;
-  amEnd: string;
-  pmStart: string;
-  pmEnd: string;
+  amStart?: string;
+  amEnd?: string;
+  pmStart?: string;
+  pmEnd?: string;
+  idle: boolean;
 }
