@@ -1,7 +1,7 @@
 <div class="working-day" [formGroup]="workingDayForm">
   <span class="day-name">{{day}}</span>
-  <span [hidden]="idle">
-    <mat-form-field class="time-picker" #amStart>
+  <span class="time-picker" [ngClass]="{'hidden': idle}">
+    <mat-form-field #amStart>
       <mat-placeholder>Début (AM)</mat-placeholder>
       <mat-datetimepicker-toggle [for]="amStartPicker" matSuffix></mat-datetimepicker-toggle>
       <mat-datetimepicker #amStartPicker type="time" openOnFocus="true" timeInterval="15" mode="'portrait'">
@@ -9,8 +9,8 @@
       <input type="text" matInput formControlName="amStart" [matDatetimepicker]="amStartPicker" autocomplete="false">
     </mat-form-field>
   </span>
-  <span [hidden]="idle">
-    <mat-form-field class="time-picker" #amEnd>
+  <span class="time-picker" [ngClass]="{'hidden': idle}">
+    <mat-form-field #amEnd>
       <mat-placeholder>Fin (AM)</mat-placeholder>
       <mat-datetimepicker-toggle [for]="amEndPicker" matSuffix></mat-datetimepicker-toggle>
       <mat-datetimepicker #amEndPicker type="time" openOnFocus="true" timeInterval="15" mode="'portrait'">
@@ -18,8 +18,8 @@
       <input type="text" matInput formControlName="amEnd" [matDatetimepicker]="amEndPicker" autocomplete="false">
     </mat-form-field>
   </span>
-  <span [hidden]="idle">
-    <mat-form-field class="time-picker" #pmStart>
+  <span class="time-picker" [ngClass]="{'hidden': idle}">
+    <mat-form-field #pmStart>
       <mat-placeholder>Début (PM)</mat-placeholder>
       <mat-datetimepicker-toggle [for]="pmStartPicker" matSuffix></mat-datetimepicker-toggle>
       <mat-datetimepicker #pmStartPicker type="time" openOnFocus="true" timeInterval="15" mode="'portrait'">
@@ -27,8 +27,8 @@
       <input type="text" matInput formControlName="pmStart" [matDatetimepicker]="pmStartPicker" autocomplete="false">
     </mat-form-field>
   </span>
-  <span [hidden]="idle">
-    <mat-form-field class="time-picker" #pmEnd>
+  <span class="time-picker" [ngClass]="{'hidden': idle}">
+    <mat-form-field #pmEnd>
       <mat-placeholder>Fin (PM)</mat-placeholder>
       <mat-datetimepicker-toggle [for]="pmEndPicker" matSuffix></mat-datetimepicker-toggle>
       <mat-datetimepicker #pmEndPicker type="time" openOnFocus="true" timeInterval="15" mode="'portrait'">
