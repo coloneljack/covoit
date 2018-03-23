@@ -62,34 +62,35 @@
         </agm-map>
       </div>
 
-      <div class="form-row">
-        <div class="form-field" *ngIf="address">
+      <div class="form-row centered">
+        <div class="form-field address-container" *ngIf="address">
           <app-address-card [address]="address"></app-address-card>
         </div>
 
-        <div class="form-field">
-          <mat-list class="radio-group">
-            <label mat-subheader for="type">Type *</label>
+        <div class="form-field type-container">
+          <div>
+            <label class="type-label" for="type">Type *</label>
             <mat-radio-group id="type" formControlName="type" (change)="changeType()">
               <mat-radio-button [value]="'C'" color="primary">Conducteur</mat-radio-button>
               <mat-radio-button [value]="'P'" color="primary">Passager</mat-radio-button>
               <mat-radio-button [value]="'CP'" color="primary">Les deux</mat-radio-button>
             </mat-radio-group>
-          </mat-list>
-        </div>
+          </div>
 
-        <div class="form-field" *ngIf="isDriver()">
-          <mat-form-field>
-            <input type="number" matInput placeholder="Préciser le nombre de places disponibles" formControlName="seats"
-                   min="0" max="9">
-            <mat-error *ngIf="seats.invalid" [appFieldMessage]="seats"></mat-error>
-          </mat-form-field>
+          <div *ngIf="isDriver()">
+            <mat-form-field class="seats">
+              <input type="number" matInput placeholder="Nombre de places disponibles *" min="0" max="9"
+                     formControlName="seats">
+              <mat-error *ngIf="seats.invalid" [appFieldMessage]="seats"></mat-error>
+            </mat-form-field>
+          </div>
         </div>
       </div>
 
       <div class="form-row">
-        <div class="form-field">
-          <mat-list class="working-week">
+        <div class="form-field working-week">
+          <mat-list>
+            <h3>Horaires de travail</h3>
             <mat-list-item>
               <app-working-day #monday [day]="'Lundi'" [workingDay]="user.workingWeek?.monday"></app-working-day>
             </mat-list-item>
