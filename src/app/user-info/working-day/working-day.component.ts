@@ -69,11 +69,12 @@ export class WorkingDayComponent implements OnInit {
     const amEndDefault = moment('12:15', WorkingDayComponent.HOUR_FORMAT);
     const pmStartDefault = moment('13:45', WorkingDayComponent.HOUR_FORMAT);
     const pmEndDefault = moment('18:00', WorkingDayComponent.HOUR_FORMAT);
+
     this.workingDayForm = this.fb.group({
-      amStart: this.workingDay ? (moment(this.workingDay.amStart, WorkingDayComponent.HOUR_FORMAT) || amStartDefault) : amStartDefault,
-      amEnd: this.workingDay ? (moment(this.workingDay.amEnd, WorkingDayComponent.HOUR_FORMAT) || amEndDefault) : amEndDefault,
-      pmStart: this.workingDay ? (moment(this.workingDay.pmStart, WorkingDayComponent.HOUR_FORMAT) || pmStartDefault) : pmStartDefault,
-      pmEnd: this.workingDay ? (moment(this.workingDay.pmEnd, WorkingDayComponent.HOUR_FORMAT) || pmEndDefault) : pmEndDefault,
+      amStart: this.workingDay && this.workingDay.amStart ? moment(this.workingDay.amStart, WorkingDayComponent.HOUR_FORMAT) : amStartDefault,
+      amEnd: this.workingDay && this.workingDay.amEnd ? moment(this.workingDay.amEnd, WorkingDayComponent.HOUR_FORMAT) : amEndDefault,
+      pmStart: this.workingDay && this.workingDay.pmStart ? moment(this.workingDay.pmStart, WorkingDayComponent.HOUR_FORMAT) : pmStartDefault,
+      pmEnd: this.workingDay && this.workingDay.pmEnd ? moment(this.workingDay.pmEnd, WorkingDayComponent.HOUR_FORMAT) : pmEndDefault,
       idle: this.workingDay ? this.workingDay.idle : false
     });
   }
