@@ -1,5 +1,8 @@
 import { GoogleMapsAPIWrapper } from '@agm/core';
-import { Directive, DoCheck, Input, IterableDiffer, IterableDiffers, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Directive, DoCheck, EventEmitter, Input, IterableDiffer, IterableDiffers, OnChanges, OnInit, Output,
+  SimpleChanges
+} from '@angular/core';
 import { Address } from '../entities/address';
 
 declare const google: any;
@@ -14,6 +17,8 @@ export class RouteDirective implements OnInit, OnChanges, DoCheck {
   @Input() to: Address;
   @Input() waypoints?: Array<Address>;
   @Input() keepMapZoomOnDisplay = false;
+  @Input() detailsPanel?: any;
+  @Output() routeDisplayed: EventEmitter<boolean> = new EventEmitter<boolean>();
   private directionsDisplay: any;
   private directionsService: any;
   private iterableDiffer: IterableDiffer<any>;
@@ -39,7 +44,7 @@ export class RouteDirective implements OnInit, OnChanges, DoCheck {
   public ngOnChanges(changes: SimpleChanges): void {
     this.displayRoute();
   }
-  
+
   public ngDoCheck(): void {
     const changes = this.iterableDiffer.diff(this.waypoints);
     if (changes) {
@@ -74,14 +79,23 @@ export class RouteDirective implements OnInit, OnChanges, DoCheck {
           if (status === 'OK') {
             this.directionsDisplay.setMap(map);
             this.directionsDisplay.setDirections(response);
+            if (this.detailsPanel) {
+              this.directionsDisplay.setPanel(this.detailsPanel);
+            }
+            this.routeDisplayed.emit(true);
           } else {
             console.log('Directions request failed due to ' + status);
+            this.routeDisplayed.emit(false);
           }
         });
       });
-    } else if (this.directionsDisplay) {
-      // Remove direction if origin or destination is missing
-      this.directionsDisplay.setMap(null);
+    } else {
+      this.routeDisplayed.emit(false);
+      if (this.directionsDisplay) {
+        // Remove direction if origin or destination is missing
+        this.directionsDisplay.setMap(null);
+        this.directionsDisplay.setPanel(null);
+      }
     }
   }
 }

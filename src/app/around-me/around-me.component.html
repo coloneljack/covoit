@@ -9,7 +9,8 @@
       </app-search-box>
 
       <app-route [from]="routeOrigin" [to]="routeDestination" [waypoints]="routeWaypoints"
-                 [keepMapZoomOnDisplay]="true">
+                 [detailsPanel]="routeDetails" [keepMapZoomOnDisplay]="true"
+                 (routeDisplayed)="routeDisplayed($event)">
       </app-route>
 
       <agm-marker *ngFor="let foundAddress of foundAddresses"
@@ -37,6 +38,13 @@
       </agm-marker>
     </agm-map>
   </div>
+
+  <mat-expansion-panel [ngClass]="{'hidden': !routeDefined}">
+    <mat-expansion-panel-header>
+      <mat-panel-title>Itinéraire détaillé</mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="route-details" #routeDetails></div>
+  </mat-expansion-panel>
 
   <div class="marker-details">
     <div *ngIf="origin">

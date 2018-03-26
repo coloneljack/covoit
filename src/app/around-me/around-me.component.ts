@@ -33,6 +33,7 @@ export class AroundMeComponent implements OnInit {
   routeOrigin: Address;
   routeDestination: Address;
   routeWaypoints: Array<Address> = [];
+  routeDefined = false;
 
   constructor(private gMapsMapperService: GmapsMapperService, private aroundMeService: AroundMeService) {}
 
@@ -104,11 +105,13 @@ export class AroundMeComponent implements OnInit {
 
   resetOrigin(): void {
     this.origin = null;
+    this.routeOrigin = null;
     this.alreadyOrigin = false;
   }
 
   resetDestination(): void {
     this.destination = null;
+    this.routeDestination = null;
     this.alreadyDestination = false;
   }
 
@@ -123,6 +126,10 @@ export class AroundMeComponent implements OnInit {
 
   showSearchResults(foundPlaces: Array<PlaceResult>): void {
     this.foundAddresses = foundPlaces ? foundPlaces.map(this.gMapsMapperService.toAddress) : [];
+  }
+
+  routeDisplayed(isDisplayed: boolean): void {
+    this.routeDefined = isDisplayed;
   }
 
   private getAddress(poi: User | Address): Address {

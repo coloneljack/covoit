@@ -6,10 +6,14 @@
   align-items: center;
 
   .map {
-    width: 70%;
+    width: 50%;
 
     agm-map {
       height: 500px;
     }
+  }
+
+  mat-expansion-panel.hidden {
+    display: none;
   }
 }
