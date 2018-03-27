@@ -1,0 +1,11 @@
+<mat-card [ngClass]="{'highlighted': highlighted}">
+  <span>
+    <mat-icon [ngStyle]="{'color': iconColor}">{{iconName || 'place'}}</mat-icon>
+  </span>
+  <span [ngClass]="{'italic': !title}">{{title || '< Non défini >'}}</span>
+  <span class="actions">
+    <button *ngIf="hasRemoveAction" type="button" mat-button color="accent" (click)="remove()">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </span>
+</mat-card>

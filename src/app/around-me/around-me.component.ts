@@ -1,8 +1,5 @@
-import { MapsAPILoader } from '@agm/core';
 import { ControlPosition } from '@agm/core/services/google-maps-types';
-import { Component, NgZone, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
 import { Address } from '../shared/entities/address';
 import { User } from '../shared/entities/user';
 import { GmapsMapperService } from '../shared/services/gmaps-mapper.service';
@@ -61,12 +58,12 @@ export class AroundMeComponent implements OnInit {
 
   isUser(a: any): a is User {
     const user = <User> a;
-    return user.firstName !== undefined && user.lastName !== undefined;
+    return user && user.firstName !== undefined && user.lastName !== undefined;
   }
 
   isAddress(a: any): a is Address {
     const address = <Address> a;
-    return address.lat !== undefined && address.lng !== undefined;
+    return address && address.lat !== undefined && address.lng !== undefined;
   }
 
   centerMap(center: Address): void {
@@ -130,6 +127,17 @@ export class AroundMeComponent implements OnInit {
 
   routeDisplayed(isDisplayed: boolean): void {
     this.routeDefined = isDisplayed;
+  }
+
+  getRouteLineTitle(element: User | Address): string {
+    let title = '';
+    if (this.isUser(element)) {
+      title = `${element.firstName} ${element.lastName}`;
+    } else if (this.isAddress(element)) {
+      title = element.title || `${element.streetNumber} ${element.streetName}, ${element.zip} ${element.city}, ${element.country}`;
+    }
+
+    return title;
   }
 
   private getAddress(poi: User | Address): Address {

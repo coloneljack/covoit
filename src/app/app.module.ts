@@ -32,6 +32,7 @@ import { SearchBoxComponent } from './shared/components/search-box/search-box.co
 import { AddressCardComponent } from './shared/components/address-card/address-card.component';
 import { AddressActionsComponent } from './shared/components/address-actions/address-actions.component';
 import { WorkingDayComponent } from './user-info/working-day/working-day.component';
+import { RouteElementComponent } from './around-me/route-element/route-element.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { WorkingDayComponent } from './user-info/working-day/working-day.compone
     SearchBoxComponent,
     AddressCardComponent,
     AddressActionsComponent,
-    WorkingDayComponent
+    WorkingDayComponent,
+    RouteElementComponent
   ],
   imports: [
     BrowserModule,
