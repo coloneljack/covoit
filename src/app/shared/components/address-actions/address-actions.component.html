@@ -1,30 +1,30 @@
-<button type="button" mat-button title="Set as origin" (click)="setOrigin()"
+<button type="button" mat-button title="Définir comme point de départ" (click)="setOrigin()"
         *ngIf="hasAction(setAsOrigin) && canSetAsOrigin">
   <i class="far fa-flag fa-lg"></i>
 </button>
-<button type="button" mat-button title="Unset origin" (click)="unsetOrigin()"
+<button type="button" mat-button title="Retirer comme point de départ" (click)="unsetOrigin()"
         *ngIf="hasAction(unsetAsOrigin) && canUnsetAsOrigin">
   <i class="far fa-flag fa-lg crossed"></i>
 </button>
 
-<button type="button" mat-button title="Set as destination" (click)="setDestination()"
+<button type="button" mat-button title="Définir comme destination" (click)="setDestination()"
         *ngIf="hasAction(setAsDestination) && canSetAsDestination">
   <i class="fas fa-flag-checkered fa-lg"></i>
 </button>
-<button type="button" mat-button title="Unset destination" (click)="unsetDestination()"
+<button type="button" mat-button title="Retirer comme destination" (click)="unsetDestination()"
         *ngIf="hasAction(unsetAsDestination) && canUnsetAsDestination">
   <i class="fas fa-flag-checkered fa-lg crossed"></i>
 </button>
 
-<button type="button" mat-button title="Add as waypoint" (click)="addAsWaypoint()"
+<button type="button" mat-button title="Ajouter en tant que point de passage" (click)="addAsWaypoint()"
         *ngIf="hasAction(addedAsWaypoint) && canAddAsWaypoint">
   <i class="fas fa-map-marker fa-lg"></i>
 </button>
-<button type="button" mat-button title="Remove waypoint" (click)="removeAsWaypoint()"
+<button type="button" mat-button title="Retirer en tant que point de passage" (click)="removeAsWaypoint()"
         *ngIf="hasAction(removedAsWaypoint) && canRemoveAsWaypoint">
   <i class="fas fa-map-marker fa-lg crossed"></i>
 </button>
 
-<button type="button" mat-button title="Center" (click)="center()" *ngIf="hasAction(centered)">
+<button type="button" mat-button title="Centrer" (click)="center()" *ngIf="hasAction(centered)">
   <mat-icon>center_focus_strong</mat-icon>
 </button>

@@ -3,74 +3,117 @@
     <agm-map [latitude]="mapCenter.lat" [longitude]="mapCenter.lng" [zoom]="zoom"
              [mapTypeControl]="true"
              [mapTypeControlOptions]="{mapTypeIds: ['roadmap', 'hybrid', 'satellite', 'terrain']}">
+
+      <!-- Search box -->
       <app-search-box [placeholder]="'Chercher une adresse...'" [position]="searchBoxPosition"
                       [autoBoundResults]="false"
                       (placesChange)="showSearchResults($event)">
       </app-search-box>
 
+      <!-- Route display -->
       <app-route [from]="routeOrigin" [to]="routeDestination" [waypoints]="routeWaypoints"
                  [detailsPanel]="routeDetails" [keepMapZoomOnDisplay]="true"
                  (routeDisplayed)="routeDisplayed($event)">
       </app-route>
 
+      <!-- Search results markers -->
       <agm-marker *ngFor="let foundAddress of foundAddresses"
                   [latitude]="foundAddress.lat" [longitude]="foundAddress.lng"
                   [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'"
                   (markerClick)="select(foundAddress)">
+        <agm-snazzy-info-window [maxWidth]="500" [maxHeight]="400" [padding]="'0px'" [showCloseButton]="false"
+                                [closeWhenOthersOpen]="true" [isOpen]="foundAddress === selected">
+          <ng-template>
+            <app-address-card [address]="foundAddress" [canSetAsOrigin]="true"
+                              [canSetAsDestination]="true"
+                              [canAddAsWaypoint]="true"
+                              (setAsOrigin)="displayRouteFrom(foundAddress)"
+                              (setAsDestination)="displayRouteTo(foundAddress)"
+                              (addedAsWaypoint)="addWaypoint(foundAddress)"
+                              (centered)="centerMap(foundAddress)">
+            </app-address-card>
+          </ng-template>
+        </agm-snazzy-info-window>
       </agm-marker>
 
+      <!-- Work location marker -->
       <agm-marker *ngIf="workLocation"
                   [latitude]="workLocation.lat" [longitude]="workLocation.lng" [title]="workLocation.title"
                   [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/orange-dot.png'"
                   (markerClick)="select(workLocation)">
+        <agm-snazzy-info-window [maxWidth]="500" [maxHeight]="400" [padding]="'0px'" [showCloseButton]="false"
+                                [closeWhenOthersOpen]="true" [isOpen]="workLocation === selected">
+          <ng-template>
+            <app-address-card [address]="workLocation" [canSetAsOrigin]="!alreadyOrigin && !alreadyDestination"
+                              [canSetAsDestination]="!alreadyOrigin && !alreadyDestination"
+                              [canAddAsWaypoint]="!alreadyWaypoint && !alreadyOrigin && !alreadyDestination"
+                              [canUnsetAsOrigin]="alreadyOrigin"
+                              [canUnsetAsDestination]="alreadyDestination"
+                              [canRemoveAsWaypoint]="alreadyWaypoint"
+                              (setAsOrigin)="displayRouteFrom(workLocation)"
+                              (setAsDestination)="displayRouteTo(workLocation)"
+                              (addedAsWaypoint)="addWaypoint(workLocation)"
+                              (unsetAsOrigin)="resetOrigin()"
+                              (unsetAsDestination)="resetDestination()"
+                              (removedAsWaypoint)="removeWaypoint(workLocation)"
+                              (centered)="centerMap(workLocation)">
+            </app-address-card>
+          </ng-template>
+        </agm-snazzy-info-window>
       </agm-marker>
 
+      <!-- User markers -->
       <agm-marker *ngFor="let user of users"
                   [latitude]="user.address.lat" [longitude]="user.address.lng"
                   [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/red-dot.png'"
                   (markerClick)="select(user)">
+        <agm-snazzy-info-window [maxWidth]="500" [maxHeight]="400" [padding]="'0px'" [showCloseButton]="false"
+                                [closeWhenOthersOpen]="true" [isOpen]="user === selected">
+          <ng-template>
+            <app-user-card [user]="user" [canSetAsOrigin]="!alreadyOrigin && !alreadyDestination"
+                           [canSetAsDestination]="!alreadyOrigin && !alreadyDestination"
+                           [canAddAsWaypoint]="!alreadyWaypoint && !alreadyOrigin && !alreadyDestination"
+                           [canUnsetAsOrigin]="alreadyOrigin"
+                           [canUnsetAsDestination]="alreadyDestination"
+                           [canRemoveAsWaypoint]="alreadyWaypoint"
+                           (setAsOrigin)="displayRouteFrom(user)"
+                           (setAsDestination)="displayRouteTo(user)"
+                           (addedAsWaypoint)="addWaypoint(user)"
+                           (unsetAsOrigin)="resetOrigin()"
+                           (unsetAsDestination)="resetDestination()"
+                           (removedAsWaypoint)="removeWaypoint(user)"
+                           (centered)="centerMap(user.address)">
+            </app-user-card>
+          </ng-template>
+        </agm-snazzy-info-window>
       </agm-marker>
 
+      <!-- Markers of other addresses (manually added ones) -->
       <agm-marker *ngFor="let address of otherAddresses"
                   [latitude]="address.lat" [longitude]="address.lng" [title]="address.title"
                   [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'"
                   (markerClick)="select(address)">
+        <agm-snazzy-info-window [title]="address.title" [maxWidth]="500" [maxHeight]="400" [padding]="'0px'"
+                                [showCloseButton]="false" [closeWhenOthersOpen]="true" [isOpen]="address === selected">
+          <ng-template>
+            <app-address-card [address]="address" [canSetAsOrigin]="!alreadyOrigin && !alreadyDestination"
+                              [canSetAsDestination]="!alreadyOrigin && !alreadyDestination"
+                              [canAddAsWaypoint]="!alreadyWaypoint && !alreadyOrigin && !alreadyDestination"
+                              [canUnsetAsOrigin]="alreadyOrigin"
+                              [canUnsetAsDestination]="alreadyDestination"
+                              [canRemoveAsWaypoint]="alreadyWaypoint"
+                              (setAsOrigin)="displayRouteFrom(address)"
+                              (setAsDestination)="displayRouteTo(address)"
+                              (addedAsWaypoint)="addWaypoint(address)"
+                              (unsetAsOrigin)="resetOrigin()"
+                              (unsetAsDestination)="resetDestination()"
+                              (removedAsWaypoint)="removeWaypoint(address)"
+                              (centered)="centerMap(address)">
+            </app-address-card>
+          </ng-template>
+        </agm-snazzy-info-window>
       </agm-marker>
     </agm-map>
-  </div>
-
-  <div class="marker-details" *ngIf="selected">
-    <h3>Sélection</h3>
-    <app-user-card *ngIf="isUser(selected)" [user]="selected"
-                   [canSetAsOrigin]="!alreadyOrigin && !alreadyDestination"
-                   [canSetAsDestination]="!alreadyOrigin && !alreadyDestination"
-                   [canAddAsWaypoint]="!alreadyWaypoint && !alreadyOrigin && !alreadyDestination"
-                   [canUnsetAsOrigin]="alreadyOrigin"
-                   [canUnsetAsDestination]="alreadyDestination"
-                   [canRemoveAsWaypoint]="alreadyWaypoint"
-                   (setAsOrigin)="displayRouteFrom(selected)"
-                   (setAsDestination)="displayRouteTo(selected)"
-                   (addedAsWaypoint)="addWaypoint(selected)"
-                   (unsetAsOrigin)="resetOrigin()"
-                   (unsetAsDestination)="resetDestination()"
-                   (removedAsWaypoint)="removeWaypoint(selected)"
-                   (centered)="centerMap(selected.address)">
-    </app-user-card>
-    <app-address-card *ngIf="isAddress(selected)" [address]="selected"
-                      [canSetAsOrigin]="!alreadyOrigin && !alreadyDestination"
-                      [canSetAsDestination]="!alreadyOrigin && !alreadyDestination"
-                      [canAddAsWaypoint]="!alreadyWaypoint && !alreadyOrigin && !alreadyDestination"
-                      [canUnsetAsOrigin]="alreadyOrigin"
-                      [canUnsetAsDestination]="alreadyDestination"
-                      [canRemoveAsWaypoint]="alreadyWaypoint"
-                      (setAsOrigin)="displayRouteFrom(selected)"
-                      (setAsDestination)="displayRouteTo(selected)"
-                      (addedAsWaypoint)="addWaypoint(selected)"
-                      (unsetAsOrigin)="resetOrigin()"
-                      (unsetAsDestination)="resetDestination()"
-                      (removedAsWaypoint)="removeWaypoint(selected)"
-                      (centered)="centerMap(selected)">
-    </app-address-card>
   </div>
 </div>
 

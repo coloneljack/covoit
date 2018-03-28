@@ -71,10 +71,12 @@ export class AroundMeComponent implements OnInit {
   }
 
   select(poi: User | Address): void {
-    this.selected = poi;
-    this.alreadyOrigin = (this.origin === poi);
-    this.alreadyDestination = (this.destination === poi);
-    this.alreadyWaypoint = (this.waypoints.indexOf(poi) !== -1);
+    if (poi) {
+      this.selected = poi;
+      this.alreadyOrigin = (this.origin === poi);
+      this.alreadyDestination = (this.destination === poi);
+      this.alreadyWaypoint = (this.waypoints.indexOf(poi) !== -1);
+    }
   }
 
   displayRouteFrom(poi: User | Address): void {
