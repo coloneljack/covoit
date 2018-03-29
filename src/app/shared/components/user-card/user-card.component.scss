@@ -26,6 +26,11 @@ mat-card {
         justify-content: flex-start;
         flex-wrap: wrap;
       }
+
+      &.incomplete-info-warn {
+        display: block;
+        font-style: italic;
+      }
     }
   }
 

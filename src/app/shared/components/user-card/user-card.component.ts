@@ -9,6 +9,7 @@ import { AddressActionsComponent } from '../address-actions/address-actions.comp
 })
 export class UserCardComponent extends AddressActionsComponent implements OnInit {
 
+  @Input() currentUser = false;
   @Input() user: User;
   @Input() highlighted = false;
 

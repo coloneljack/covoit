@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from './shared/entities/user';
+import { UserInfoService } from './user-info/user-info.service';
 
 @Component({
   selector: 'app-root',
@@ -10,17 +11,11 @@ export class AppComponent implements OnInit {
 
   public user: User;
 
-  constructor() {}
+  constructor(private userService: UserInfoService) {}
 
 
   public ngOnInit(): void {
-    // TODO get connected user
-    this.user = {
-      firstName: 'Vincent',
-      lastName: 'Nourry',
-      email: 'vincent.nourry@orange.com',
-      tel: '1409'
-    };
+    this.userService.getIncompleteCurrentUserInfo().subscribe(u => this.user = u);
   }
 
 }

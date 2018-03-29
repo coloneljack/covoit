@@ -35,6 +35,13 @@ export class UserInfoService {
     });
   }
 
+  public getIncompleteCurrentUserInfo(): Observable<User> {
+    return Observable.of({
+      firstName: 'Vincent',
+      lastName: 'Nourry'
+    });
+  }
+
   public saveUserInfo(user: User): Observable<string> {
     console.log('--> UserInfoService::saveUserAddress');
     console.log(user);
