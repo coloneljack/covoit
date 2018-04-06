@@ -1,8 +1,10 @@
 import { ControlPosition } from '@agm/core/services/google-maps-types';
 import { Component, OnInit } from '@angular/core';
 import { Address } from '../shared/entities/address';
+import { RouteDetails } from '../shared/entities/route-details';
 import { User } from '../shared/entities/user';
 import { GmapsMapperService } from '../shared/services/gmaps-mapper.service';
+import { UserInfoService } from '../user-info/user-info.service';
 import { AroundMeService } from './around-me.service';
 import PlaceResult = google.maps.places.PlaceResult;
 
@@ -18,6 +20,7 @@ export class AroundMeComponent implements OnInit {
   destination: User | Address;
   mapCenter: Address;
   origin: User | Address;
+  user: User;
   users: Array<User> = [];
   selected: User | Address;
   foundAddresses: Array<Address> = [];
@@ -31,8 +34,10 @@ export class AroundMeComponent implements OnInit {
   routeDestination: Address;
   routeWaypoints: Array<Address> = [];
   routeDefined = false;
+  closestRouteDetails: RouteDetails;
 
-  constructor(private gMapsMapperService: GmapsMapperService, private aroundMeService: AroundMeService) {}
+  constructor(private gMapsMapperService: GmapsMapperService, private aroundMeService: AroundMeService,
+              private userInfoService: UserInfoService) {}
 
   setRouteOrigin(): void {
     this.routeOrigin = this.getAddress(this.origin);
@@ -53,6 +58,7 @@ export class AroundMeComponent implements OnInit {
       this.setRouteDestination();
       this.workLocation = wl;
     });
+    this.userInfoService.getCurrentUserInfo().subscribe(user => this.user = user);
     this.aroundMeService.getAllUsers().subscribe((coworkerAddresses: Array<User>) => this.users = coworkerAddresses);
   }
 
@@ -66,6 +72,19 @@ export class AroundMeComponent implements OnInit {
     return address && address.lat !== undefined && address.lng !== undefined;
   }
 
+  findClosestAddress(): void {
+    if (this.selected && this.selected !== this.workLocation) {
+      const selectedAddress = this.isUser(this.selected) ? this.selected.address : this.selected;
+      const waypoints = this.users.filter(u => u !== this.selected).map(u => u.address).concat(this.otherAddresses);
+      this.aroundMeService.getRouteDetailsOfClosestWaypoint(selectedAddress, this.workLocation, waypoints)
+        .subscribe(routeDetails => this.closestRouteDetails = routeDetails);
+    }
+  }
+
+  resetClosestAddress(): void {
+    this.closestRouteDetails = null;
+  }
+
   centerMap(center: Address): void {
     this.mapCenter = center;
   }
@@ -76,6 +95,7 @@ export class AroundMeComponent implements OnInit {
       this.alreadyOrigin = (this.origin === poi);
       this.alreadyDestination = (this.destination === poi);
       this.alreadyWaypoint = (this.waypoints.indexOf(poi) !== -1);
+      this.findClosestAddress();
     }
   }
 

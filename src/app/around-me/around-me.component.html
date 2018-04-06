@@ -22,7 +22,8 @@
                   [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'"
                   (markerClick)="select(foundAddress)">
         <agm-snazzy-info-window [maxWidth]="500" [maxHeight]="400" [padding]="'0px'" [showCloseButton]="false"
-                                [closeWhenOthersOpen]="true" [isOpen]="foundAddress === selected">
+                                [closeWhenOthersOpen]="true" [isOpen]="foundAddress === selected"
+                                (afterClose)="resetClosestAddress()">
           <ng-template>
             <app-address-card [address]="foundAddress" [canSetAsOrigin]="true"
                               [canSetAsDestination]="true"
@@ -42,7 +43,8 @@
                   [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/orange-dot.png'"
                   (markerClick)="select(workLocation)">
         <agm-snazzy-info-window [maxWidth]="500" [maxHeight]="400" [padding]="'0px'" [showCloseButton]="false"
-                                [closeWhenOthersOpen]="true" [isOpen]="workLocation === selected">
+                                [closeWhenOthersOpen]="true" [isOpen]="workLocation === selected"
+                                (afterClose)="resetClosestAddress()">
           <ng-template>
             <app-address-card [address]="workLocation" [canSetAsOrigin]="!alreadyOrigin && !alreadyDestination"
                               [canSetAsDestination]="!alreadyOrigin && !alreadyDestination"
@@ -62,13 +64,40 @@
         </agm-snazzy-info-window>
       </agm-marker>
 
+      <!-- Current user marker -->
+      <agm-marker [latitude]="user.address.lat" [longitude]="user.address.lng"
+                  [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/red-dot.png'"
+                  (markerClick)="select(user)">
+        <agm-snazzy-info-window [maxWidth]="500" [maxHeight]="400" [padding]="'0px'" [showCloseButton]="false"
+                                [closeWhenOthersOpen]="true" [isOpen]="user === selected"
+                                (afterClose)="resetClosestAddress()">
+          <ng-template>
+            <app-user-card [user]="user" [canSetAsOrigin]="!alreadyOrigin && !alreadyDestination"
+                           [canSetAsDestination]="!alreadyOrigin && !alreadyDestination"
+                           [canAddAsWaypoint]="!alreadyWaypoint && !alreadyOrigin && !alreadyDestination"
+                           [canUnsetAsOrigin]="alreadyOrigin"
+                           [canUnsetAsDestination]="alreadyDestination"
+                           [canRemoveAsWaypoint]="alreadyWaypoint"
+                           (setAsOrigin)="displayRouteFrom(user)"
+                           (setAsDestination)="displayRouteTo(user)"
+                           (addedAsWaypoint)="addWaypoint(user)"
+                           (unsetAsOrigin)="resetOrigin()"
+                           (unsetAsDestination)="resetDestination()"
+                           (removedAsWaypoint)="removeWaypoint(user)"
+                           (centered)="centerMap(user.address)">
+            </app-user-card>
+          </ng-template>
+        </agm-snazzy-info-window>
+      </agm-marker>
+
       <!-- User markers -->
       <agm-marker *ngFor="let user of users"
                   [latitude]="user.address.lat" [longitude]="user.address.lng"
                   [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/red-dot.png'"
                   (markerClick)="select(user)">
         <agm-snazzy-info-window [maxWidth]="500" [maxHeight]="400" [padding]="'0px'" [showCloseButton]="false"
-                                [closeWhenOthersOpen]="true" [isOpen]="user === selected">
+                                [closeWhenOthersOpen]="true" [isOpen]="user === selected"
+                                (afterClose)="resetClosestAddress()">
           <ng-template>
             <app-user-card [user]="user" [canSetAsOrigin]="!alreadyOrigin && !alreadyDestination"
                            [canSetAsDestination]="!alreadyOrigin && !alreadyDestination"
@@ -94,7 +123,8 @@
                   [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'"
                   (markerClick)="select(address)">
         <agm-snazzy-info-window [title]="address.title" [maxWidth]="500" [maxHeight]="400" [padding]="'0px'"
-                                [showCloseButton]="false" [closeWhenOthersOpen]="true" [isOpen]="address === selected">
+                                [showCloseButton]="false" [closeWhenOthersOpen]="true" [isOpen]="address === selected"
+                                (afterClose)="resetClosestAddress()">
           <ng-template>
             <app-address-card [address]="address" [canSetAsOrigin]="!alreadyOrigin && !alreadyDestination"
                               [canSetAsDestination]="!alreadyOrigin && !alreadyDestination"
@@ -114,6 +144,20 @@
         </agm-snazzy-info-window>
       </agm-marker>
     </agm-map>
+  </div>
+
+  <div class="closest-info" *ngIf="closestRouteDetails">
+    <div>Trajet collaboratif le plus court incluant la sélection</div>
+    <div>
+      Départ&nbsp;:
+      <app-address-card [address]="closestRouteDetails.origin"></app-address-card>
+    </div>
+    <div>
+      Points de parcours&nbsp;:
+      <app-address-card *ngFor="let w of closestRouteDetails.waypoints" [address]="w"></app-address-card>
+    </div>
+    <div>Distance&nbsp;: {{closestRouteDetails.distance / 1000}}&nbsp;km</div>
+    <div>Durée&nbsp;: {{closestRouteDetails.duration / 60}}&nbsp;min</div>
   </div>
 </div>
 

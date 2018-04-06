@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Address } from '../entities/address';
-import PlaceResult = google.maps.places.PlaceResult;
+
+declare const google: any;
 
 @Injectable()
 export class GmapsMapperService {
 
   constructor() { }
 
-  public toAddress(place: PlaceResult): Address {
+  public toAddress(place: google.maps.places.PlaceResult): Address {
     let address = null;
 
     if (place.geometry && place.geometry.location) {
@@ -38,6 +39,10 @@ export class GmapsMapperService {
 
       return address;
     }
+  }
+
+  public toLatLng(a: Address): google.maps.LatLng {
+    return new google.maps.LatLng(a.lat, a.lng);
   }
 
 }

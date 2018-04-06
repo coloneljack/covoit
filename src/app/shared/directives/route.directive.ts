@@ -1,6 +1,14 @@
 import { GoogleMapsAPIWrapper } from '@agm/core';
 import {
-  Directive, DoCheck, EventEmitter, Input, IterableDiffer, IterableDiffers, OnChanges, OnInit, Output,
+  Directive,
+  DoCheck,
+  EventEmitter,
+  Input,
+  IterableDiffer,
+  IterableDiffers,
+  OnChanges,
+  OnInit,
+  Output,
   SimpleChanges
 } from '@angular/core';
 import { Address } from '../entities/address';
@@ -28,7 +36,7 @@ export class RouteDirective implements OnInit, OnChanges, DoCheck {
   }
 
   public ngOnInit(): void {
-    this.gmapsApi.getNativeMap().then(map => {
+    this.gmapsApi.getNativeMap().then(() => {
       this.directionsService = new google.maps.DirectionsService();
 
       this.directionsDisplay = new google.maps.DirectionsRenderer();

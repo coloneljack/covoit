@@ -1,11 +1,10 @@
 import { ControlPosition } from '@agm/core/services/google-maps-types';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { Address } from '../shared/entities/address';
 import { User } from '../shared/entities/user';
-import { WorkingDay } from '../shared/entities/working-hours';
 import { GmapsMapperService } from '../shared/services/gmaps-mapper.service';
 import { UserInfoService } from './user-info.service';
 import { WorkingDayComponent } from './working-day/working-day.component';
@@ -56,10 +55,6 @@ export class UserInfoComponent implements OnInit {
 
   get seats(): FormControl {
     return this.userInfoForm.get('seats') as FormControl;
-  }
-
-  get workingWeek(): FormGroup {
-    return this.userInfoForm.get('workingWeek') as FormGroup;
   }
 
   ngOnInit() {
